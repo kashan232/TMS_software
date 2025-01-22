@@ -13,7 +13,7 @@
                 <ul aria-expanded="false">
                     <li><a href="{{ route('cloth-type') }}">Cloth Type</a></li>
                     <li><a href="{{ route('create-measurement-parts') }}">Create Measurement Parts</a></li>
-                    <li><a href="#">View Measurement Parts</a></li>
+                    <li><a href="{{ route('view-measurement-parts') }}">View Measurement Parts</a></li>
                 </ul>
             </li>
 

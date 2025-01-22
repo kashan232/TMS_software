@@ -33,6 +33,7 @@ Route::post('/cloth-type/update', [ClothTypeController::class, 'update'])->name(
 // measurment
 Route::get('/create-measurement-parts', [MeasurementPartController::class, 'create_measurement_parts'])->middleware(['auth','admin'])->name('create-measurement-parts');
 Route::post('/measurment_store', [MeasurementPartController::class, 'measurment_store'])->name('measurment_store');
+Route::get('/view-measurement-parts', [MeasurementPartController::class, 'view_measurement_parts'])->middleware(['auth','admin'])->name('view-measurement-parts');
 
 
 

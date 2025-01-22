@@ -57,4 +57,20 @@ class MeasurementPartController extends Controller
             return redirect()->back();
         }
     }
+
+    public function view_measurement_parts(Request $request)
+    {
+        if (Auth::id()) {
+            $userId = Auth::id();
+
+            $MeasurementPart = MeasurementPart::where('admin_or_user_id', $userId)->get(); // Adjust according to your database structure
+            return view('admin_panel.measurement_parts.view-measurement-parts', [
+                'MeasurementPart' => $MeasurementPart,
+            ]);
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    
 }
