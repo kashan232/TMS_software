@@ -2,9 +2,58 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClothType;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ClothTypeController extends Controller
 {
-    //
+    public function cloth_type()
+    {
+        if (Auth::id()) {
+            $userId = Auth::id();
+
+            $ClothTypes = ClothType::where('admin_or_user_id', $userId)->get(); // Adjust according to your database structure
+
+            return view('admin_panel.cloth_type.cloth_types', [
+                'ClothTypes' => $ClothTypes,
+            ]);
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function store_cloth_type(Request $request)
+    {
+        if (Auth::id()) {
+            $usertype = Auth()->user()->usertype;
+            $userId = Auth::id();
+            ClothType::create([
+                'admin_or_user_id'    => $userId,
+                'cloth_type_name'          => $request->cloth_type_name,
+                'cloth_type_gender'          => $request->cloth_type_gender,
+                'created_at'        => Carbon::now(),
+                'updated_at'        => Carbon::now(),
+            ]);
+            return redirect()->back()->with('success', 'ClothType has been  created successfully');
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function update(Request $request)
+    {
+        // Get the cloth type ID from the request
+        $cloth_type_id = $request->input('cloth_type_id');
+        // dd($cloth_type_id);
+
+        // Update the cloth type in the database
+        ClothType::where('id', $cloth_type_id)->update([
+            'cloth_type_name' => $request->cloth_type_name,
+            'cloth_type_gender' => $request->gender,
+        ]);
+
+        return redirect()->back()->with('success', 'Cloth Type updated successfully');
+    }
 }
