@@ -27,14 +27,15 @@
                         </div>
                         <div class="card-body">
                             <div class="basic-form">
-                                <form>
+                                <form action="{{ route('measurment_store') }}" method="POST" enctype="multipart/form-data" >
+                                    @csrf
                                     <div class="row">
                                         <div class="mb-3 col-md-6">
                                             <label class="form-label">Select Category</label>
-                                            <select name="category" class="form-control" required>
+                                            <select name="Measurement_category" class="form-control" required>
                                                 <option value="" selected disabled>Select One</option>
                                                 @foreach($ClothTypes as $type)
-                                                <option value="{{ $type->cloth_type_name }}">
+                                                <option value="{{ $type->cloth_type_name }}" >
                                                     {{ $type->cloth_type_name }}
                                                 </option>
                                                 @endforeach
@@ -43,7 +44,7 @@
 
                                         <div class="mb-3 col-md-6">
                                             <label class="form-label">Measurement Name</label>
-                                            <input type="text" class="form-control" placeholder="Measurement Name">
+                                            <input type="text" class="form-control" name="Measurement_name" placeholder="Measurement Name">
                                         </div>
 
                                         <div class="mb-3 col-md-12">
@@ -54,7 +55,7 @@
                                         <!-- Image upload section -->
                                         <div class="mb-3 col-md-6">
                                             <label class="form-label">Select Image</label>
-                                            <input type="file" id="imageInput" class="form-control" accept="image/*">
+                                            <input type="file" id="imageInput" name="image" class="form-control" accept="image/*">
                                         </div>
 
                                         <!-- Image preview section -->
