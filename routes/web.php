@@ -3,7 +3,9 @@
 use App\Http\Controllers\ClothTypeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MeasurementPartController;
+use App\Http\Controllers\PriceListController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StaffController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +38,20 @@ Route::post('/measurment_store', [MeasurementPartController::class, 'measurment_
 Route::get('/view-measurement-parts', [MeasurementPartController::class, 'view_measurement_parts'])->middleware(['auth','admin'])->name('view-measurement-parts');
 
 
+//cloth-type
+Route::get('/price-list', [PriceListController::class, 'price_list'])->middleware(['auth','admin'])->name('price-list');
+Route::post('/store-price-list', [PriceListController::class, 'store_price_list'])->name('store-price-list');
+Route::post('/price-list/update', [PriceListController::class, 'update'])->name('price-list.update');
+
+//staff
+Route::get('/designations', [StaffController::class, 'designations'])->middleware(['auth','admin'])->name('designations');
+Route::post('/store-designations', [StaffController::class, 'store_designations'])->name('store-designations');
+Route::post('/designations/update', [StaffController::class, 'update'])->name('designations.update');
+
+Route::get('/add-staff', [StaffController::class, 'add_staff'])->middleware(['auth','admin'])->name('add-staff');
+Route::post('/store-staff', [StaffController::class, 'store_staff'])->name('store-staff');
+Route::get('/staffs', [StaffController::class, 'staffs'])->middleware(['auth','admin'])->name('staffs');
+Route::post('/staffs/update', [StaffController::class, 'update_staff'])->name('staffs.update');
 
 
 

@@ -16,7 +16,23 @@
                     <li><a href="{{ route('view-measurement-parts') }}">View Measurement Parts</a></li>
                 </ul>
             </li>
-
+            <li><a href="{{ route('price-list') }}" class="ai-icon" aria-expanded="false">
+                    <i class="flaticon-381-list"></i>
+                    <span class="nav-text">Price Management</span>
+                </a>
+            </li>
+            <li><a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
+                    <i class="flaticon-381-networking"></i>
+                    <span class="nav-text">Manage Staff</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{ route('designations') }}">Staff Designation</a></li>
+                    <li><a href="{{ route('add-staff') }}">Add Staff</a></li>
+                    <li><a href="{{ route('staffs') }}">View/Edit Staff</a></li>
+                    <li><a href="#">Pay Salary</a></li>
+                </ul>
+            </li>
+            
             <li><a href="#" class="ai-icon" aria-expanded="false">
                     <i class="flaticon-381-list"></i>
                     <span class="nav-text">Report</span>

@@ -26,6 +26,11 @@
                             <h4 class="card-title">Add Measurement Part</h4>
                         </div>
                         <div class="card-body">
+                        @if (session()->has('success'))
+                            <div class="alert alert-success">
+                                <strong>Success!</strong> {{ session('success') }}.
+                            </div>
+                            @endif
                             <div class="basic-form">
                                 <form action="{{ route('measurment_store') }}" method="POST" enctype="multipart/form-data" >
                                     @csrf
