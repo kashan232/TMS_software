@@ -4,7 +4,7 @@
     @include('main_includes.navbar_include')
 
     @include('main_includes.admin_sidebar_include')
-   
+
 
     <div class="content-body rightside-event">
         <!-- row -->
@@ -15,7 +15,7 @@
                         <div class="card-header">
                             <h4 class="card-title">Measurement Parts List</h4>
                             <!-- Button to trigger Add Modal -->
-                             <a href="{{ route('create-measurement-parts')}}" class="btn btn-primary">Add Measurement Parts</a>
+                            <a href="{{ route('create-measurement-parts')}}" class="btn btn-primary">Add Measurement Parts</a>
                         </div>
                         <div class="card-body">
                             @if (session()->has('success'))
@@ -33,6 +33,7 @@
                                                 <th>Measurement Category</th>
                                                 <th>Measurement Name </th>
                                                 <th>Description </th>
+                                                <th>Action </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -40,12 +41,13 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
-                                                @if($type->image)
-                                                    <img src="../measurmentParts_images/1737581649_67916451de93b.png" alt="Image" style="width: 100px; height: auto;">
-                                                @else
+                                                    @if($type->image)
+                                                    
+                                                    <img src="{{ asset('http://localhost/TMS_software/public/measurmentParts_images/' . $type->image) }}" alt="Image" style="width: 100px; height: auto;">
+                                                    @else
                                                     No Image
-                                                @endif
-                    </td>
+                                                    @endif
+                                                </td>
                                                 <td>{{ $type->Measurement_category }}</td>
                                                 <td>{{ $type->Measurement_name }}</td>
                                                 <td>{{ $type->Description }}</td>
@@ -74,4 +76,3 @@
 
 
     @include('main_includes.footer_include')
-   

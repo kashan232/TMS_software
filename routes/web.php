@@ -53,7 +53,10 @@ Route::post('/store-staff', [StaffController::class, 'store_staff'])->name('stor
 Route::get('/staffs', [StaffController::class, 'staffs'])->middleware(['auth','admin'])->name('staffs');
 Route::post('/staffs/update', [StaffController::class, 'update_staff'])->name('staffs.update');
 
-
+Route::get('/staff-expenses', [StaffController::class, 'staff_expenses'])->name('staff.expenses.index');
+Route::post('/staff-expenses-store', [StaffController::class, 'store_expense'])->name('staff-expenses.store');
+Route::get('/get-previous-balance/{staff_id}', [StaffController::class, 'getPreviousBalance'])->name('staff.previous_balance');
+Route::get('/staff-expenses-record', [StaffController::class, 'staff_expenses_record'])->name('staff-expenses-record');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

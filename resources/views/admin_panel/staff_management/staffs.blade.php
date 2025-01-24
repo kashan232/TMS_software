@@ -33,6 +33,10 @@
                                                 <th>Address</th>
                                                 <th>Phone Number</th>
                                                 <th>Salary</th>
+                                                <th>Previous Bal</th>
+                                                <th>Total Amount</th>
+                                                <th>Paid Amount</th>
+                                                <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -40,27 +44,40 @@
                                             @foreach($Staffs as $Staff)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $Staff->designations }}</td>
-                                                <td>{{ $Staff->full_name }}</td>
-                                                <td>{{ $Staff->address }}</td>
-                                                <td>{{ $Staff->phone_number }}</td>
-                                                <td>{{ $Staff->salary }}</td>
+                                                <td>{{ $Staff->designations ?? 'N/A' }}</td>
+                                                <td>{{ $Staff->full_name ?? 'N/A' }}</td>
+                                                <td>{{ $Staff->address ?? 'N/A' }}</td>
+                                                <td>{{ $Staff->phone_number ?? 'N/A' }}</td>
+                                                <td>{{ $Staff->salary ?? 'N/A' }}</td>
+                                                <td>{{ $Staff->previous_balance ?? 0 }}</td>
+                                                <td>{{ $Staff->total_amount ?? 0 }}</td>
+                                                <td>{{ $Staff->total_paid ?? 0 }}</td>
+                                                <td>
+                                                    @if($Staff->status === 'Paid')
+                                                    <span class="badge bg-success">Paid</span>
+                                                    @elseif($Staff->status === 'Unpaid')
+                                                    <span class="badge bg-danger">Unpaid</span>
+                                                    @else
+                                                    <span class="badge bg-secondary">Not Given</span>
+                                                    @endif
+                                                </td>
 
                                                 <td>
                                                     <div class="d-flex">
                                                         <a href="javascript:void(0);" class="btn btn-primary edit-btn shadow btn-sm sharp me-1"
                                                             data-type-id="{{ $Staff->id }}"
-                                                            data-type-designations="{{ $Staff->designations }}"
-                                                            data-type-full_name="{{ $Staff->full_name }}"
-                                                            data-type-address="{{ $Staff->address }}"
-                                                            data-type-phone_number="{{ $Staff->phone_number }}"
-                                                            data-type-salary="{{ $Staff->salary }}">
+                                                            data-type-designations="{{ $Staff->designations ?? '' }}"
+                                                            data-type-full_name="{{ $Staff->full_name ?? '' }}"
+                                                            data-type-address="{{ $Staff->address ?? '' }}"
+                                                            data-type-phone_number="{{ $Staff->phone_number ?? '' }}"
+                                                            data-type-salary="{{ $Staff->salary ?? '' }}">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </a>
                                                     </div>
                                                 </td>
                                             </tr>
                                             @endforeach
+
                                         </tbody>
                                     </table>
                                 </div>

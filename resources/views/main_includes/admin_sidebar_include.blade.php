@@ -29,7 +29,10 @@
                     <li><a href="{{ route('designations') }}">Staff Designation</a></li>
                     <li><a href="{{ route('add-staff') }}">Add Staff</a></li>
                     <li><a href="{{ route('staffs') }}">View/Edit Staff</a></li>
-                    <li><a href="#">Pay Salary</a></li>
+                    <li><a href="{{ route('staff.expenses.index') }}">Staff Expenses</a></li>
+                    <li><a href="{{ route('staff-expenses-record') }}">Expenses Record</a></li>
+
+                    
                 </ul>
             </li>
             
