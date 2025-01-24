@@ -66,7 +66,6 @@
                                                 <td>{{ $Expense->closing_balance }}</td>
                                                 <td>
                                                     <a href="javascript:void(0);" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
-                                                    <a href="javascript:void(0);" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
                                                 </td>
                                             </tr>
                                             @endforeach
