@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClothTypeController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MeasurementPartController;
 use App\Http\Controllers\PriceListController;
@@ -57,6 +58,15 @@ Route::get('/staff-expenses', [StaffController::class, 'staff_expenses'])->name(
 Route::post('/staff-expenses-store', [StaffController::class, 'store_expense'])->name('staff-expenses.store');
 Route::get('/get-previous-balance/{staff_id}', [StaffController::class, 'getPreviousBalance'])->name('staff.previous_balance');
 Route::get('/staff-expenses-record', [StaffController::class, 'staff_expenses_record'])->name('staff-expenses-record');
+
+// Customer
+Route::get('/add-Customer', [CustomerController::class, 'add_Customer'])->middleware(['auth','admin'])->name('add-Customer');
+Route::post('/customers/store', [CustomerController::class, 'store'])->name('customers.store');
+Route::get('/Customers', [CustomerController::class, 'Customers'])->middleware(['auth','admin'])->name('Customers');
+Route::post('/update-customer', [CustomerController::class, 'updateCustomer'])->name('update-customer');
+Route::get('/customer-add-measurement/{id}', [CustomerController::class, 'customer_add_measurement'])->middleware(['auth','admin'])->name('customer-add-measurement');
+Route::get('/fetch-measurement-parts', [CustomerController::class, 'fetchMeasurementParts'])->name('fetch-measurement-parts');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -1,6 +1,7 @@
 <div class="nav-header">
 	<a href="#" class="brand-logo pt-5 pb-5">
-		<img src="images/TMS_white_logo.png" alt="image" style="width: 140px;">
+		<img src="/TMS_software/public/images/TMS_white_logo.png" alt="image" style="width: 140px;">
+
 	</a>
 
 	<div class="nav-control">
@@ -33,11 +34,12 @@
 							<i id="icon-dark" class="fas fa-moon"></i>
 						</a>
 					</li>
-					
-					
+
+
 					<li class="nav-item dropdown header-profile">
 						<a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
-							<img src="images/profile/profile.png" width="20" alt="">
+							<img src="/TMS_software/public/images/profile/profile.png" width="20" alt="">
+
 						</a>
 						<div class="dropdown-menu dropdown-menu-end">
 							<a href="#" class="dropdown-item ai-icon">

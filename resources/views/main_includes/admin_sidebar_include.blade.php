@@ -1,12 +1,25 @@
 <div class="deznav pt-4">
     <div class="deznav-scroll">
         <ul class="metismenu" id="menu">
-            <li><a href="{{ route('home') }}" class="ai-icon" aria-expanded="false">
+            <li>
+                <a href="{{ route('home') }}" class="ai-icon" aria-expanded="false">
                     <i class="flaticon-381-networking"></i>
                     <span class="nav-text">Dashboard</span>
                 </a>
             </li>
-            <li><a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
+            <li>
+                <a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
+                    <i class="flaticon-381-networking"></i>
+                    <span class="nav-text">Customer</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{ route('add-Customer') }}">Create Customer</a></li>
+                    <li><a href="{{ route('Customers') }}">Customers</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
                     <i class="flaticon-381-networking"></i>
                     <span class="nav-text">Measurements</span>
                 </a>

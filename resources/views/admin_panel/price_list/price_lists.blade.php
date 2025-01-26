@@ -17,13 +17,12 @@
         ***********************************-->
 
     <!-- Add Price Management Modal -->
-    <div class="modal fade" id="addClothTypeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addClothTypeModal" tabindex="-1" aria-labelledby="addPriceModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Price Management</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal">
-                    </button>
+                    <h5 class="modal-title" id="addPriceModalLabel">Price Management</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('store-price-list') }}" method="POST" enctype="multipart/form-data">
@@ -50,6 +49,7 @@
             </div>
         </div>
     </div>
+
 
     <div class="modal fade" id="editClothTypeModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -99,7 +99,7 @@
                         <div class="card-header">
                             <h4 class="card-title">Price Management</h4>
                             <!-- Button to trigger Add Modal -->
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#addClothTypeModal">Add Price Management</button>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addClothTypeModal">Add Price Management</button>
                         </div>
                         <div class="card-body">
                             @if (session()->has('success'))
