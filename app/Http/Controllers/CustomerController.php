@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ClothType;
 use App\Models\Customer;
+use App\Models\CustomerMeasurement;
 use App\Models\MeasurementPart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -104,17 +105,28 @@ class CustomerController extends Controller
             // Fetch customer by ID
             $customer = Customer::find($id);
 
-            // Fetch cloth types (adjust according to your database structure)
+            // Fetch cloth types and their measurement parts
             $clothTypes = ClothType::where('admin_or_user_id', $userId)->get();
+            $measurementParts = MeasurementPart::where('admin_or_user_id', $userId)->get();
+
+            // Fetch existing measurements
+            $measurements = CustomerMeasurement::where('customer_id', $id)->get();
 
             return view('admin_panel.customer.customer_add_measurement', [
                 'customer' => $customer,
                 'clothTypes' => $clothTypes,
+                'measurementParts' => $measurementParts,
+                'measurements' => $measurements->keyBy(function ($item) {
+                    return $item->cloth_type_id . '-' . $item->measurement_part_id;
+                }),
             ]);
         } else {
             return redirect()->back();
         }
     }
+
+
+
 
     public function fetchMeasurementParts(Request $request)
     {
@@ -126,5 +138,35 @@ class CustomerController extends Controller
         return response()->json([
             'measurementParts' => $measurementParts
         ]);
+    }
+
+    public function customer_measruemt_store(Request $request, $customerId)
+    {
+        // dd($customerId); // Checking the request data for debugging
+
+        $customer = Customer::findOrFail($customerId);
+        // dd($customer);
+
+
+        // Loop through the measurements and store them
+        foreach ($request->measurements as $clothTypeId => $parts) {
+            foreach ($parts as $partId => $value) {
+                // Ensure we only save non-null values
+                if ($value !== null) {
+                    CustomerMeasurement::updateOrCreate(
+                        [
+                            'customer_id' => $customer->id,
+                            'cloth_type_id' => $clothTypeId,
+                            'measurement_part_id' => $partId,
+                        ],
+                        [
+                            'value' => $value,
+                        ]
+                    );
+                }
+            }
+        }
+
+        return redirect()->back()->with('success', 'Measurements saved successfully.');
     }
 }

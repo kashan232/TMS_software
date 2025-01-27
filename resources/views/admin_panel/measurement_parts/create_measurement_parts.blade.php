@@ -1,5 +1,46 @@
 @include('main_includes.header_include')
 
+<style>
+    .btn-danger {
+        width: 100%;
+        padding: 5px;
+        font-size: 14px;
+    }
+
+    .measurement-row {
+        margin-bottom: 15px;
+        align-items: end;
+    }
+
+    .btn-success, .btn-danger {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .btn-success {
+        background-color: #4ba064;
+        border-color: #4ba064;
+    }
+
+    .btn-success:hover {
+        background-color: #3e8a52;
+        border-color: #3e8a52;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+        border-color: #c82333;
+    }
+</style>
+
 <!--**********************************
     Main wrapper start
 ***********************************-->
@@ -8,16 +49,13 @@
     <!--**********************************
         Nav header start
     ***********************************-->
-
     @include('main_includes.navbar_include')
-
     @include('main_includes.admin_sidebar_include')
+
     <!--**********************************
         Content body start
     ***********************************-->
-
     <div class="content-body rightside-event">
-        <!-- row -->
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xl-12 col-lg-12">
@@ -26,54 +64,39 @@
                             <h4 class="card-title">Add Measurement Part</h4>
                         </div>
                         <div class="card-body">
-                        @if (session()->has('success'))
-                            <div class="alert alert-success">
-                                <strong>Success!</strong> {{ session('success') }}.
-                            </div>
+                            @if (session()->has('success'))
+                                <div class="alert alert-success">
+                                    <strong>Success!</strong> {{ session('success') }}.
+                                </div>
                             @endif
                             <div class="basic-form">
-                                <form action="{{ route('measurment_store') }}" method="POST" enctype="multipart/form-data" >
+                                <form action="{{ route('measurment_store') }}" method="POST">
                                     @csrf
                                     <div class="row">
                                         <div class="mb-3 col-md-6">
                                             <label class="form-label">Select Category</label>
-                                            <select name="Measurement_category" class="form-control" required>
+                                            <select name="measurement_category" class="form-control" required>
                                                 <option value="" selected disabled>Select One</option>
                                                 @foreach($ClothTypes as $type)
-                                                <option value="{{ $type->cloth_type_name }}" >
-                                                    {{ $type->cloth_type_name }}
-                                                </option>
+                                                    <option value="{{ $type->cloth_type_name }}">{{ $type->cloth_type_name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
+                                    </div>
 
-                                        <div class="mb-3 col-md-6">
-                                            <label class="form-label">Measurement Name</label>
-                                            <input type="text" class="form-control" name="Measurement_name" placeholder="Measurement Name">
-                                        </div>
-
-                                        <div class="mb-3 col-md-12">
-                                            <label class="form-label">Description</label>
-                                            <textarea name="Description" id="Description" class="form-control" placeholder="Description"></textarea>
-                                        </div>
-
-                                        <!-- Image upload section -->
-                                        <div class="mb-3 col-md-6">
-                                            <label class="form-label">Select Image</label>
-                                            <input type="file" id="imageInput" name="image" class="form-control" accept="image/*">
-                                        </div>
-
-                                        <!-- Image preview section -->
-                                        <div class="mb-3 col-md-6">
-                                            <label class="form-label">Image Preview</label>
-                                            <div id="imagePreview" class="image-preview-box" style="display:none;">
-                                                <img id="previewImage" src="" alt="Selected Image" class="img-fluid">
-                                                <button type="button" id="cancelImage" class="btn btn-danger mt-2">Cancel</button>
+                                    <div id="measurements-container">
+                                        <div class="row measurement-row">
+                                            <div class="col-md-10">
+                                                <label class="form-label">Measurement Name</label>
+                                                <input type="text" name="measurement_names[]" class="form-control" placeholder="Enter Measurement Name">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button type="button" class="btn btn-success add-measurement">Add More</button>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    <button type="submit" class="btn btn-primary mt-3">Save</button>
                                 </form>
                             </div>
                         </div>
@@ -86,42 +109,29 @@
     @include('main_includes.copyright_include')
     @include('main_includes.footer_include')
 
-    <script>
-        document.getElementById('imageInput').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('previewImage').src = e.target.result;
-                    document.getElementById('imagePreview').style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        document.getElementById('cancelImage').addEventListener('click', function() {
-            document.getElementById('imageInput').value = ''; // Clear the file input
-            document.getElementById('imagePreview').style.display = 'none'; // Hide the preview div
-        });
-    </script>
-
-    <style>
-        .image-preview-box {
-            background-color: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .image-preview-box img {
-            max-width: 100%;
-            max-height: 200px;
-        }
-        .btn-danger {
-            width: 100%;
-            padding: 5px;
-            font-size: 14px;
-        }
-    </style>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const container = document.getElementById('measurements-container');
+
+        // Add measurement button
+        document.querySelector('.add-measurement').addEventListener('click', function () {
+            const row = document.createElement('div');
+            row.className = 'row measurement-row';
+            row.innerHTML = `
+                <div class="mb-3 col-md-10">
+                    <input type="text" name="measurement_names[]" class="form-control" placeholder="Enter Measurement Name">
+                </div>
+                <div class="mb-3 col-md-2">
+                    <button type="button" class="btn btn-danger remove-measurement">Remove</button>
+                </div>`;
+            container.appendChild(row);
+
+            // Remove measurement button
+            row.querySelector('.remove-measurement').addEventListener('click', function () {
+                row.remove();
+            });
+        });
+    });
+</script>

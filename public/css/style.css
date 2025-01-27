@@ -31307,7 +31307,9 @@ textarea.form-control {
   padding: 0.65rem 0rem; }
 
 table.dataTable tbody tr.selected a i {
-  color: #fff; }
+  color: #fff;
+  font-size:18px;
+   }
 
 .btn-check + .btn:hover {
   color: var(--bs-btn-color) !important;

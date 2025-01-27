@@ -35,7 +35,7 @@
                             <label for="cloth_type_gender">Gender</label>
                             <select class="form-control" id="cloth_type_gender" name="cloth_type_gender" required>
                                 <option value="male">Male</option>
-                                <option value="female">Female</option>
+                                <option value="kids">kids</option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Save</button>

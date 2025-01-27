@@ -29,10 +29,8 @@
                                         <thead>
                                             <tr>
                                                 <th>S.No</th>
-                                                <th>Image </th>
                                                 <th>Measurement Category</th>
                                                 <th>Measurement Name </th>
-                                                <th>Description </th>
                                                 <th>Action </th>
                                             </tr>
                                         </thead>
@@ -40,23 +38,13 @@
                                             @foreach($MeasurementPart as $type)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>
-                                                    @if($type->image)
-                                                    
-                                                    <img src="{{ asset('http://localhost/TMS_software/public/measurmentParts_images/' . $type->image) }}" alt="Image" style="width: 100px; height: auto;">
-                                                    @else
-                                                    No Image
-                                                    @endif
-                                                </td>
                                                 <td>{{ $type->Measurement_category }}</td>
                                                 <td>{{ $type->Measurement_name }}</td>
-                                                <td>{{ $type->Description }}</td>
-
                                                 <td>
                                                     <div class="d-flex">
                                                         <a href="javascript:void(0);" class="btn btn-primary edit-btn shadow btn-sm sharp me-1">
                                                             <i class="fas fa-pencil-alt"></i>
-                                                        </a>
+                                                        </a>    
                                                     </div>
                                                 </td>
                                             </tr>

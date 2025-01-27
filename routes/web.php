@@ -66,7 +66,7 @@ Route::get('/Customers', [CustomerController::class, 'Customers'])->middleware([
 Route::post('/update-customer', [CustomerController::class, 'updateCustomer'])->name('update-customer');
 Route::get('/customer-add-measurement/{id}', [CustomerController::class, 'customer_add_measurement'])->middleware(['auth','admin'])->name('customer-add-measurement');
 Route::get('/fetch-measurement-parts', [CustomerController::class, 'fetchMeasurementParts'])->name('fetch-measurement-parts');
-
+Route::post('/measurements/{customerId}', [CustomerController::class, 'customer_measruemt_store'])->name('measurements.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
