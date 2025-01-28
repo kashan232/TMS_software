@@ -4,6 +4,7 @@ use App\Http\Controllers\ClothTypeController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MeasurementPartController;
+use App\Http\Controllers\OrderManagementController;
 use App\Http\Controllers\PriceListController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaffController;
@@ -67,6 +68,10 @@ Route::post('/update-customer', [CustomerController::class, 'updateCustomer'])->
 Route::get('/customer-add-measurement/{id}', [CustomerController::class, 'customer_add_measurement'])->middleware(['auth','admin'])->name('customer-add-measurement');
 Route::get('/fetch-measurement-parts', [CustomerController::class, 'fetchMeasurementParts'])->name('fetch-measurement-parts');
 Route::post('/measurements/{customerId}', [CustomerController::class, 'customer_measruemt_store'])->name('measurements.store');
+
+
+// Order management
+Route::get('/add-Order', [OrderManagementController::class, 'add_Order'])->middleware(['auth','admin'])->name('add-Order');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

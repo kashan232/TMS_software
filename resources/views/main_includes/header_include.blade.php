@@ -19,7 +19,11 @@
 
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="/TMS_software/public/images/favicon.png">
-    <link href="/TMS_software/public/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+    <!-- <link href="/TMS_software/public/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet"> -->
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+    
     <link rel="stylesheet" href="/TMS_software/public/vendor/chartist/css/chartist.min.css">
     <link href="/TMS_software/public/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
     <link href="/TMS_software/public/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">

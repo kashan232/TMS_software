@@ -10,6 +10,17 @@
             <li>
                 <a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
                     <i class="flaticon-381-networking"></i>
+                    <span class="nav-text">Order</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{ route('add-Order') }}">New Order</a></li>
+                    <li><a href="#">Order</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
+                    <i class="flaticon-381-networking"></i>
                     <span class="nav-text">Customer</span>
                 </a>
                 <ul aria-expanded="false">
