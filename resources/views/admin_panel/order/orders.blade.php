@@ -124,15 +124,15 @@
                                             <td>
                                                 <div style="display: flex; gap: 5px;">
                                                     @if ($order->remaining > 0)
-                                                    <a class="btn btn-sm btn-success open-payment-modal"
+                                                    <a class="btn btn-sm btn-success text-white open-payment-modal"
                                                         data-id="{{ $order->id }}"
                                                         data-customer="{{ $order->customer_number }}"
                                                         data-remaining="{{ $order->remaining }}">
                                                         Payment
                                                     </a>
                                                     @endif
-                                                    <a href="{{ route('order.edit', $order->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                                    <a href="{{ route('order.receipt', $order->id) }}" class="btn btn-sm btn-dark">Receipt</a>
+                                                    <a href="{{ route('order.edit', $order->id) }}" class="btn btn-sm btn-primary text-white">Edit</a>
+                                                    <a href="{{ route('order.receipt', $order->id) }}" class="btn btn-sm btn-dark text-white">Receipt</a>
                                                 </div>
                                             </td>
                                         </tr>
