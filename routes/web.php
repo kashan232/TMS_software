@@ -6,6 +6,7 @@ use App\Http\Controllers\MeasurementPartController;
 use App\Http\Controllers\PriceListController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\ExpenseManageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -58,10 +59,19 @@ Route::post('/staff-expenses-store', [StaffController::class, 'store_expense'])-
 Route::get('/get-previous-balance/{staff_id}', [StaffController::class, 'getPreviousBalance'])->name('staff.previous_balance');
 Route::get('/staff-expenses-record', [StaffController::class, 'staff_expenses_record'])->name('staff-expenses-record');
 
+// Expenses
+Route::get('/add-expense-category', [ExpenseManageController::class, 'add_expense_category'])->middleware(['auth','admin'])->name('add-expense-category');
+Route::post('/store-category', [ExpenseManageController::class, 'store_category'])->name('store-category');
+Route::get('/expenses', [ExpenseManageController::class, 'view_expenses'])->middleware(['auth','admin'])->name('expenses');
+Route::get('/add-expenses', [ExpenseManageController::class, 'add_expenses'])->middleware(['auth','admin'])->name('add-expenses');
+Route::post('/store-expenses', [ExpenseManageController::class, 'store_expenses'])->name('store-expenses');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
 
 require __DIR__.'/auth.php';
