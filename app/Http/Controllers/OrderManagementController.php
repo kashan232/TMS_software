@@ -109,4 +109,74 @@ class OrderManagementController extends Controller
         $order = Order::with('customer')->findOrFail($id);
         return view('admin_panel.order.receipt', compact('order'));
     }
+
+    public function updatePayment(Request $request)
+    {
+        $order = Order::findOrFail($request->order_id);
+        // Paid Amount
+        $paid = $request->pay_amount;
+        // Update Remaining
+        $order->remaining -= $paid;
+        // Update Advance Paid
+        $order->advance_paid += $paid;
+        $order->save();
+        return response()->json(['message' => 'Payment updated successfully']);
+    }
+
+    public function editOrder($id)
+    {
+        $order = Order::with('customer')->findOrFail($id);
+        // Decode the JSON-encoded strings into arrays
+        $order->cloth_type = json_decode($order->cloth_type);
+        $order->price = json_decode($order->price);
+        $order->quantity = json_decode($order->quantity);
+        $order->item_total = json_decode($order->item_total);
+
+        // Fetch cloth types and their prices for the authenticated user
+        $userId = Auth::id();
+        $clothTypes = DB::table('cloth_types')
+            ->join('price_lists', 'cloth_types.cloth_type_name', '=', 'price_lists.cloth_type_name')
+            ->where('cloth_types.admin_or_user_id', $userId)
+            ->select('cloth_types.cloth_type_name', 'price_lists.Price')
+            ->get();
+
+        return view('admin_panel.order.edit_order', compact('order', 'clothTypes'));
+    }
+
+    public function updateOrder(Request $request, $orderId)
+    {
+        if (Auth::id()) {
+            $userId = Auth::id();
+            dd($request);
+            // Retrieve the existing order
+            $order = Order::findOrFail($orderId);
+
+            // Update the order fields
+            $order->order_receiving_date = $request->order_receiving_date;
+            $order->order_received_by = $request->order_received_by;
+            $order->order_description = $request->order_description;
+            $order->sub_total = $request->sub_total;
+            $order->discount = $request->discount ?? 0;
+            $order->net_total = $request->net_total;
+            $order->advance_paid = $request->advance_paid ?? 0;
+            $order->remaining = $request->remaining;
+            $order->collection_date = $request->collection_date;
+            // Keep the same order status unless you need to change it
+            $order->status = 'Order Updated'; // Change status if necessary
+
+            // Encode individual arrays into JSON
+            $order->cloth_type = json_encode($request->input('cloth_type', []));
+            $order->price = json_encode($request->input('price', []));
+            $order->quantity = json_encode($request->input('quantity', []));
+            $order->item_total = json_encode($request->input('item_total', []));
+
+            // Save the updated order
+            $order->save();
+
+            return redirect()->back()->with('success', 'Order updated successfully!');
+
+        } else {
+            return redirect()->back();
+        }
+    }
 }

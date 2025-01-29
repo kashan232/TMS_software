@@ -82,7 +82,9 @@ Route::get('/add-Order', [OrderManagementController::class, 'add_Order'])->middl
 Route::post('/Order/store', [OrderManagementController::class, 'saveOrder'])->name('Order.store');
 Route::get('/Orders', [OrderManagementController::class, 'Orders'])->middleware(['auth','admin'])->name('Orders');
 Route::get('/order/receipt/{id}', [OrderManagementController::class, 'showReceipt'])->name('order.receipt');
-
+Route::post('/payment/update', [OrderManagementController::class, 'updatePayment'])->name('payment.update');
+Route::get('/order/edit/{id}', [OrderManagementController::class, 'editOrder'])->name('order.edit');
+Route::post('/orders/{order}', [OrderManagementController::class, 'updateOrder'])->name('orders.update');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
