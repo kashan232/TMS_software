@@ -12,4 +12,9 @@ class Order extends Model
     use SoftDeletes;
 
     protected $guarded = [];
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_number', 'customer_number');
+    }
 }

@@ -72,6 +72,10 @@ Route::post('/measurements/{customerId}', [CustomerController::class, 'customer_
 
 // Order management
 Route::get('/add-Order', [OrderManagementController::class, 'add_Order'])->middleware(['auth','admin'])->name('add-Order');
+Route::post('/Order/store', [OrderManagementController::class, 'saveOrder'])->name('Order.store');
+Route::get('/Orders', [OrderManagementController::class, 'Orders'])->middleware(['auth','admin'])->name('Orders');
+Route::get('/order/receipt/{id}', [OrderManagementController::class, 'showReceipt'])->name('order.receipt');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

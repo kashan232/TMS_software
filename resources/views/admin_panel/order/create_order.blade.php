@@ -50,20 +50,20 @@
                                     <strong>Success!</strong> {{ session('success') }}.
                                 </div>
                                 @endif
-                                <form action="#" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('Order.store') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
 
                                     <!-- Customer Section -->
                                     <div class="row mb-4">
                                         <div class="col-md-4">
-                                            <label for="customerNumber" class="form-label">Select Customer Number</label>
+                                            <label for="customerNumber" class="form-label">Select Customer ID</label>
                                             <select name="customer_number" id="customerNumber" class="form-control" onchange="updateCustomerDetails(this)">
                                                 <option value="">Select Customer</option>
                                                 @foreach ($customers as $customer)
                                                 <option value="{{ $customer->customer_number }}"
                                                     data-name="{{ $customer->full_name }}"
                                                     data-phone="{{ $customer->phone_number }}">
-                                                    {{ $customer->customer_number }}
+                                                    #{{ $customer->customer_number }}
                                                 </option>
                                                 @endforeach
                                             </select>
@@ -87,6 +87,12 @@
                                         <div class="col-md-4">
                                             <label for="orderReceiver" class="form-label">Order Received By</label>
                                             <input type="text" name="order_received_by" id="orderReceiver" class="form-control" value="{{ Auth::user()->name }}" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col-md-12">
+                                            <label for="order_description" class="form-label">Order description</label>
+                                            <textarea name="order_description" id="order_description" class="form-control"></textarea>
                                         </div>
                                     </div>
 

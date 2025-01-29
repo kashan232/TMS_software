@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -35,5 +36,77 @@ class OrderManagementController extends Controller
         } else {
             return redirect()->back();
         }
+    }
+    public function saveOrder(Request $request)
+    {
+
+        if (Auth::id()) {
+            $userId = Auth::id();
+            // Validate the incoming request
+            $validatedData = $request->validate([
+                'customer_number' => 'required',
+                'order_receiving_date' => 'required|date',
+                'order_received_by' => 'required',
+                'order_description' => 'nullable|string',
+                'cloth_type' => 'required|array',
+                'price' => 'required|array',
+                'quantity' => 'required|array',
+                'item_total' => 'required|array',
+                'sub_total' => 'required|numeric',
+                'discount' => 'nullable|numeric',
+                'net_total' => 'required|numeric',
+                'advance_paid' => 'nullable|numeric',
+                'remaining' => 'required|numeric',
+                'collection_date' => 'required|date',
+            ]);
+
+            // Create the order
+            $order = new Order();
+            $order->admin_or_user_id = $userId;
+            $order->customer_number = $request->customer_number;
+            $order->order_receiving_date = $request->order_receiving_date;
+            $order->order_received_by = $request->order_received_by;
+            $order->order_description = $request->order_description;
+            $order->sub_total = $request->sub_total;
+            $order->discount = $request->discount ?? 0;
+            $order->net_total = $request->net_total;
+            $order->advance_paid = $request->advance_paid ?? 0;
+            $order->remaining = $request->remaining;
+            $order->collection_date = $request->collection_date;
+            $order->status = 'Order Received'; // Initial status
+
+            // Encode individual arrays into JSON
+            $order->cloth_type = json_encode($request->input('cloth_type', []));
+            $order->price = json_encode($request->input('price', []));
+            $order->quantity = json_encode($request->input('quantity', []));
+            $order->item_total = json_encode($request->input('item_total', []));
+
+            $order->save();
+
+            return redirect()->back()->with('success', 'Order saved successfully!');
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function Orders()
+    {
+        if (Auth::id()) {
+            $userId = Auth::id();
+
+            $Orders = Order::where('admin_or_user_id', $userId)->get(); // Adjust according to your database structure
+            // dd($Orders);
+            return view('admin_panel.order.orders', [
+                'Orders' => $Orders,
+            ]);
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function showReceipt($id)
+    {
+        $order = Order::with('customer')->findOrFail($id);
+        return view('admin_panel.order.receipt', compact('order'));
     }
 }

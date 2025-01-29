@@ -14,7 +14,7 @@
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="{{ route('add-Order') }}">New Order</a></li>
-                    <li><a href="#">Order</a></li>
+                    <li><a href="{{ route('Orders') }}">Order</a></li>
                 </ul>
             </li>
 
