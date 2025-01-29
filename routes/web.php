@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\ClothTypeController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MeasurementPartController;
+use App\Http\Controllers\OrderManagementController;
 use App\Http\Controllers\PriceListController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaffController;
@@ -65,6 +67,22 @@ Route::post('/store-category', [ExpenseManageController::class, 'store_category'
 Route::get('/expenses', [ExpenseManageController::class, 'view_expenses'])->middleware(['auth','admin'])->name('expenses');
 Route::get('/add-expenses', [ExpenseManageController::class, 'add_expenses'])->middleware(['auth','admin'])->name('add-expenses');
 Route::post('/store-expenses', [ExpenseManageController::class, 'store_expenses'])->name('store-expenses');
+// Customer
+Route::get('/add-Customer', [CustomerController::class, 'add_Customer'])->middleware(['auth','admin'])->name('add-Customer');
+Route::post('/customers/store', [CustomerController::class, 'store'])->name('customers.store');
+Route::get('/Customers', [CustomerController::class, 'Customers'])->middleware(['auth','admin'])->name('Customers');
+Route::post('/update-customer', [CustomerController::class, 'updateCustomer'])->name('update-customer');
+Route::get('/customer-add-measurement/{id}', [CustomerController::class, 'customer_add_measurement'])->middleware(['auth','admin'])->name('customer-add-measurement');
+Route::get('/fetch-measurement-parts', [CustomerController::class, 'fetchMeasurementParts'])->name('fetch-measurement-parts');
+Route::post('/measurements/{customerId}', [CustomerController::class, 'customer_measruemt_store'])->name('measurements.store');
+
+
+// Order management
+Route::get('/add-Order', [OrderManagementController::class, 'add_Order'])->middleware(['auth','admin'])->name('add-Order');
+Route::post('/Order/store', [OrderManagementController::class, 'saveOrder'])->name('Order.store');
+Route::get('/Orders', [OrderManagementController::class, 'Orders'])->middleware(['auth','admin'])->name('Orders');
+Route::get('/order/receipt/{id}', [OrderManagementController::class, 'showReceipt'])->name('order.receipt');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
