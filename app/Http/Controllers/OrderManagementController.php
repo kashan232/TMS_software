@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\Order;
+use App\Models\OrderTracking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -174,9 +175,74 @@ class OrderManagementController extends Controller
             $order->save();
 
             return redirect()->back()->with('success', 'Order updated successfully!');
-
         } else {
             return redirect()->back();
         }
+    }
+
+    public function order_calender()
+    {
+        if (Auth::id()) {
+            $userId = Auth::id();
+
+            return view('admin_panel.order.order_calender', []);
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function Orders_tracker()
+    {
+        if (Auth::id()) {
+            $userId = Auth::id();
+
+            $Orders = Order::where('admin_or_user_id', $userId)->get(); // Adjust according to your database structure
+            // dd($Orders);
+            return view('admin_panel.order.orders_tracker', [
+                'Orders' => $Orders,
+            ]);
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function viewOrder($id)
+    {
+        $order = Order::findOrFail($id);
+
+        // Decode arrays
+        $order->cloth_types = json_decode($order->cloth_type, true);
+        $order->quantities = json_decode($order->quantity, true);
+        $order->prices = json_decode($order->price, true);
+        $order->item_totals = json_decode($order->item_total, true);
+
+        // Tracking Status Fetch Karo
+        $trackingStatuses = OrderTracking::where('order_id', $id)
+            ->pluck('status', 'cloth_type')
+            ->toArray();
+
+        return view('admin_panel.order.order_detail', compact('order', 'trackingStatuses'));
+    }
+    public function updateStatus(Request $request)
+    {
+        $order = Order::find($request->order_id);
+
+        if (!$order) {
+            return response()->json(['error' => 'Order not found'], 404);
+        }
+
+        // Jo cloth type track ho raha hai uska data save karo
+        OrderTracking::updateOrCreate(
+            [
+                'order_id' => $request->order_id,
+                'cloth_type' => $request->cloth_type,
+            ],
+            [
+                'quantity' => $request->quantity,
+                'status' => $request->order_status,
+            ]
+        );
+
+        return response()->json(['success' => 'Order status updated successfully']);
     }
 }

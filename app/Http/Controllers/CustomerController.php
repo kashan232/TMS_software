@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CustomerMail;
 use App\Models\ClothType;
 use App\Models\Customer;
 use App\Models\CustomerMeasurement;
 use App\Models\MeasurementPart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class CustomerController extends Controller
 {
@@ -168,5 +170,34 @@ class CustomerController extends Controller
         }
 
         return redirect()->back()->with('success', 'Measurements saved successfully.');
+    }
+
+    public function showEmailForm($id)
+    {
+        $customer = Customer::findOrFail($id);
+        return view('admin_panel.customer.send_email', compact('customer'));
+    }
+
+    public function sendEmail(Request $request)
+    {
+        $request->validate([
+            'customer_id' => 'required|exists:customers,id',
+            'email' => 'required|email',
+            'subject' => 'required',
+            'message' => 'required'
+        ]);
+
+        $customer = Customer::findOrFail($request->customer_id);
+
+        $data = [
+            'name' => $customer->full_name,
+            'email' => $request->email,
+            'subject' => $request->subject,
+            'message' => $request->message
+        ];
+
+        Mail::to($request->email)->send(new CustomerMail($data));
+
+        return redirect()->back()->with('success', 'Email Sent Successfully!');
     }
 }

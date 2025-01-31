@@ -7,6 +7,13 @@
                     <span class="nav-text">Dashboard</span>
                 </a>
             </li>
+
+            <li><a href="{{ route('order-calender') }}" class="ai-icon" aria-expanded="false">
+                    <i class="flaticon-381-list"></i>
+                    <span class="nav-text">Calender</span>
+                </a>
+            </li>
+
             <li>
                 <a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
                     <i class="flaticon-381-networking"></i>
@@ -15,6 +22,9 @@
                 <ul aria-expanded="false">
                     <li><a href="{{ route('add-Order') }}">New Order</a></li>
                     <li><a href="{{ route('Orders') }}">Order</a></li>
+                    <li><a href="{{ route('Orders-tracker') }}">Order Tracker</a></li>
+
+                    
                 </ul>
             </li>
 

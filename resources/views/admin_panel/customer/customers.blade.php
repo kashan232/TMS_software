@@ -61,6 +61,11 @@
                                                     data-comment="{{ $Customer->comment }}">
                                                     <i class="fas fa-pencil-alt"></i>
                                                 </a>
+
+                                                <a href="{{ route('customer.send-email', ['id' => $Customer->id]) }}" class="btn btn-info text-white me-2">
+                                                    <i class="fas fa-envelope"></i> Send Email
+                                                </a>
+
                                             </td>
                                         </tr>
                                         @endforeach
