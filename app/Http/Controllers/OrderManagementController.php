@@ -223,6 +223,17 @@ class OrderManagementController extends Controller
 
         return view('admin_panel.order.order_detail', compact('order', 'trackingStatuses'));
     }
+
+    public function orderupdateStatus(Request $request)
+    {
+        $order = Order::findOrFail($request->id);
+        $order->status = $request->status;
+        $order->delivery_description = $request->description;
+        $order->save();
+
+        return response()->json(['success' => true]);
+    }
+
     public function updateStatus(Request $request)
     {
         $order = Order::find($request->order_id);

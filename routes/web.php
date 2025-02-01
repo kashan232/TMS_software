@@ -89,6 +89,7 @@ Route::get('/order/edit/{id}', [OrderManagementController::class, 'editOrder'])-
 Route::post('/orders/{order}', [OrderManagementController::class, 'updateOrder'])->name('orders.update');
 Route::get('/Orders-tracker', [OrderManagementController::class, 'Orders_tracker'])->name('Orders-tracker');
 Route::get('/Orders-tracker/view/{id}', [OrderManagementController::class, 'viewOrder'])->name('order.track.view');
+Route::post('/order/update-status', [OrderManagementController::class, 'orderupdateStatus'])->name('order.updateStatus');
 
 
 Route::get('/order-calender', [OrderManagementController::class, 'order_calender'])->name('order-calender');

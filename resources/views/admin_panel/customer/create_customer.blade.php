@@ -36,6 +36,12 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
+                                                <label for="Email">Email</label>
+                                                <input type="text" class="form-control" id="Email" name="email" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
                                                 <label for="address">Address</label>
                                                 <input type="text" class="form-control" id="address" name="address" required>
                                             </div>

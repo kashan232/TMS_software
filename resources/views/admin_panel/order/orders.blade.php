@@ -114,27 +114,63 @@
                                             <td>{{ $order->advance_paid }}</td>
                                             <td>{{ $order->remaining }}</td>
                                             <td>{{ $order->collection_date }}</td>
-                                            <td>
-                                                @if($order->status === 'Order Received')
-                                                <span class="btn btn-sm btn-success" style="font-size: 10px!important;">{{ $order->status }}</span>
-                                                @else
-                                                <span class="btn btn-sm btn-warning" style="font-size: 10px!important;">{{ $order->status }}</span>
-                                                @endif
+                                            <td class="text-center">
+                                                @php
+                                                $statusColors = [
+                                                'Order Received' => 'primary', // Blue
+                                                'Order Updated' => 'danger', // Red
+                                                'Ready' => 'warning', // Yellow
+                                                'Delivered' => 'success', // Green
+                                                ];
+                                                @endphp
+
+                                                <span class="btn btn-{{ $statusColors[$order->status] ?? 'secondary' }} btn-sm w-100 text-nowrap">
+                                                    {{ $order->status }}
+                                                </span>
                                             </td>
-                                            <td>
-                                                <div style="display: flex; gap: 5px;">
+                                            <td class="text-center">
+                                                <div class="d-flex justify-content-center gap-2">
                                                     @if ($order->remaining > 0)
-                                                    <a class="btn btn-sm btn-success text-white open-payment-modal"
+                                                    <!-- Payment Button -->
+                                                    <a class="btn btn-success btn-xs d-flex align-items-center gap-1 open-payment-modal"
                                                         data-id="{{ $order->id }}"
                                                         data-customer="{{ $order->customer_number }}"
-                                                        data-remaining="{{ $order->remaining }}">
-                                                        Payment
+                                                        data-remaining="{{ $order->remaining }}"
+                                                        data-bs-toggle="tooltip"
+                                                        title="Make Payment">
+                                                        <i class="fas fa-money-bill-wave"></i>
                                                     </a>
                                                     @endif
-                                                    <a href="{{ route('order.edit', $order->id) }}" class="btn btn-sm btn-primary text-white">Edit</a>
-                                                    <a href="{{ route('order.receipt', $order->id) }}" class="btn btn-sm btn-dark text-white">Receipt</a>
+
+                                                    <!-- Edit Button -->
+                                                    <a href="{{ route('order.edit', $order->id) }}"
+                                                        class="btn btn-primary btn-xs d-flex align-items-center gap-1"
+                                                        data-bs-toggle="tooltip"
+                                                        title="Edit Order">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+
+                                                    <!-- Receipt Button -->
+                                                    <a href="{{ route('order.receipt', $order->id) }}"
+                                                        class="btn btn-dark btn-xs d-flex align-items-center gap-1"
+                                                        data-bs-toggle="tooltip"
+                                                        title="View Receipt">
+                                                        <i class="fas fa-file-invoice"></i>
+                                                    </a>
+
+                                                    <!-- Order Status Button -->
+                                                    <button class="btn btn-warning btn-xs d-flex align-items-center gap-1 open-status-modal"
+                                                        data-id="{{ $order->id }}"
+                                                        data-status="{{ $order->status }}"
+                                                        data-description="{{ $order->delivery_description }}"
+                                                        data-bs-toggle="tooltip"
+                                                        title="Order Status">
+                                                        <i class="fas fa-tasks"></i>
+                                                    </button>
                                                 </div>
                                             </td>
+
+
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -147,10 +183,48 @@
         </div>
     </div>
 
+    <!-- Order Status Modal -->
+    <div class="modal fade" id="orderStatusModal" tabindex="-1" aria-labelledby="orderStatusLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update Order Status</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="orderId">
+
+                    <label for="orderStatus" class="form-label">Select Status</label>
+                    <select id="orderStatus" class="form-select">
+                        <option value="Ready">Ready</option>
+                        <option value="Delivered">Delivered</option>
+                    </select>
+
+                    <label for="deliveryDescription" class="form-label mt-3">Enter Delivery Details</label>
+                    <textarea id="deliveryDescription" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success save-order-status">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     @include('main_includes.copyright_include')
     @include('main_includes.footer_include')
 
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.forEach(function(tooltipTriggerEl) {
+            new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    });
+</script>
 
 <script>
     $(document).ready(function() {
@@ -210,5 +284,46 @@
                 }
             });
         });
+
+        $(document).ready(function() {
+            // Open Order Status Modal
+            $(".open-status-modal").click(function() {
+                let orderId = $(this).data("id");
+                let currentStatus = $(this).data("status");
+                let description = $(this).data("description");
+
+                $("#orderId").val(orderId);
+                $("#orderStatus").val(currentStatus);
+                $("#deliveryDescription").val(description);
+
+                $("#orderStatusModal").modal("show");
+            });
+
+            // Save Order Status and Delivery Description
+            $(".save-order-status").click(function() {
+                let orderId = $("#orderId").val();
+                let status = $("#orderStatus").val();
+                let description = $("#deliveryDescription").val();
+
+                $.ajax({
+                    url: "{{ route('order.updateStatus') }}",
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        id: orderId,
+                        status: status,
+                        description: description
+                    },
+                    success: function(response) {
+                        $("#orderStatusModal").modal("hide");
+                        location.reload();
+                    },
+                    error: function() {
+                        alert("Error updating order!");
+                    }
+                });
+            });
+        });
+
     });
 </script>

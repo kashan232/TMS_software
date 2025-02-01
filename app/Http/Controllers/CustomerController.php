@@ -40,6 +40,7 @@ class CustomerController extends Controller
                 'admin_or_user_id' => $userId,
                 'customer_number' => $request->customer_number,
                 'full_name' => $request->full_name,
+                'email' => $request->email,
                 'address' => $request->address,
                 'phone_number' => $request->phone_number,
                 'city' => $request->city,
@@ -78,6 +79,7 @@ class CustomerController extends Controller
                 // Update customer details
                 $customer->customer_number = $request->customer_number;
                 $customer->full_name = $request->full_name;
+                $customer->email = $request->email;
                 $customer->address = $request->address;
                 $customer->phone_number = $request->phone_number;
                 $customer->gender = $request->gender;

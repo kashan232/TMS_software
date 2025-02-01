@@ -35,22 +35,10 @@
                                     <th>Address:</th>
                                     <td>{{ $customer->address }}</td>
                                 </tr>
-                                <tr>
-                                    <th>City:</th>
-                                    <td>{{ $customer->city }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Gender:</th>
-                                    <td>{{ ucfirst($customer->gender) }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Comment:</th>
-                                    <td>{{ $customer->comment ?? 'No comment' }}</td>
-                                </tr>
+                               
                             </table>
 
                             <hr>
-
                             <form action="{{ route('customer.send-email.post') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="customer_id" value="{{ $customer->id }}">

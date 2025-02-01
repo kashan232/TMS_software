@@ -3,20 +3,20 @@
         <ul class="metismenu" id="menu">
             <li>
                 <a href="{{ route('home') }}" class="ai-icon" aria-expanded="false">
-                    <i class="flaticon-381-networking"></i>
+                    <i class="fas fa-home"></i>
                     <span class="nav-text">Dashboard</span>
                 </a>
             </li>
 
             <li><a href="{{ route('order-calender') }}" class="ai-icon" aria-expanded="false">
-                    <i class="flaticon-381-list"></i>
+                    <i class="fas fa-calendar-week"></i>
                     <span class="nav-text">Calender</span>
                 </a>
             </li>
 
             <li>
                 <a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
-                    <i class="flaticon-381-networking"></i>
+                    <i class="fas fa-boxes"></i>
                     <span class="nav-text">Order</span>
                 </a>
                 <ul aria-expanded="false">
@@ -30,7 +30,7 @@
 
             <li>
                 <a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
-                    <i class="flaticon-381-networking"></i>
+                    <i class="fas fa-users"></i>
                     <span class="nav-text">Customer</span>
                 </a>
                 <ul aria-expanded="false">
@@ -41,7 +41,7 @@
 
             <li>
                 <a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
-                    <i class="flaticon-381-networking"></i>
+                    <i class="fas fa-ruler"></i>
                     <span class="nav-text">Measurements</span>
                 </a>
                 <ul aria-expanded="false">
@@ -51,12 +51,12 @@
                 </ul>
             </li>
             <li><a href="{{ route('price-list') }}" class="ai-icon" aria-expanded="false">
-                    <i class="flaticon-381-list"></i>
+                    <i class="fas fa-money-bill"></i>
                     <span class="nav-text">Price Management</span>
                 </a>
             </li>
             <li><a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
-                    <i class="flaticon-381-networking"></i>
+                    <i class="fas fa-user"></i>
                     <span class="nav-text">Manage Staff</span>
                 </a>
                 <ul aria-expanded="false">
@@ -71,7 +71,7 @@
             </li>
             
             <li><a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
-                    <i class="flaticon-381-networking"></i>
+                    <i class="fas fa-wallet"></i>
                     <span class="nav-text">Expenses</span>
                 </a>
                 <ul aria-expanded="false">

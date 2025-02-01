@@ -1,6 +1,6 @@
 <div class="nav-header">
 	<a href="#" class="brand-logo pt-5 pb-5">
-		<img src="/TMS_software/public/images/TMS_white_logo.png" alt="image" style="width: 140px;">
+		<img src="/TMS_software/public/images/TMS_white_logo.png" alt="image" style="width: 15	0px;">
 
 	</a>
 
