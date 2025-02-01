@@ -1,20 +1,8 @@
 @include('main_includes.header_include')
-
-<!--**********************************
-        Main wrapper start
-    ***********************************-->
 <div id="main-wrapper">
-
-    <!--**********************************
-            Nav header start
-        ***********************************-->
-
     @include('main_includes.navbar_include')
 
     @include('main_includes.admin_sidebar_include')
-    <!--**********************************
-            Content body start
-        ***********************************-->
     <div class="content-body rightside-event">
         <!-- row -->
         <div class="container-fluid">

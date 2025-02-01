@@ -140,6 +140,9 @@
                                                         title="Make Payment">
                                                         <i class="fas fa-money-bill-wave"></i>
                                                     </a>
+                                                    @else
+                                                    <!-- Hidden Placeholder for Alignment -->
+                                                    <span class="btn btn-success btn-xs invisible" style="width: 32px;"></span>
                                                     @endif
 
                                                     <!-- Edit Button -->
@@ -169,6 +172,7 @@
                                                     </button>
                                                 </div>
                                             </td>
+
 
 
                                         </tr>

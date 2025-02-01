@@ -94,6 +94,7 @@ Route::post('/order/update-status', [OrderManagementController::class, 'orderupd
 
 Route::get('/order-calender', [OrderManagementController::class, 'order_calender'])->name('order-calender');
 Route::post('/update-order-status', [OrderManagementController::class, 'updateStatus'])->name('update.order.status');
+Route::get('/get_orders', [OrderManagementController::class, 'getOrders'])->name('get-orders');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

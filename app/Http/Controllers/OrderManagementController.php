@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderTracking;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -255,5 +256,37 @@ class OrderManagementController extends Controller
         );
 
         return response()->json(['success' => 'Order status updated successfully']);
+    }
+
+    public function getOrders(Request $request)
+    {
+        $month = $request->month;
+        $year = $request->year;
+
+        // Fetch orders based on the month and year
+        $orders = Order::whereYear('collection_date', $year) // Filter based on collection date year
+            ->whereMonth('collection_date', $month) // Filter based on collection date month
+            ->get();
+
+        // Group orders by collection date (day)
+        $groupedOrders = $orders->groupBy(function ($order) {
+            return Carbon::parse($order->collection_date)->day; // Group by the day of collection date
+        });
+
+        // Prepare the result with customer number and status per day
+        $formattedOrders = [];
+
+        foreach ($groupedOrders as $day => $ordersForDay) {
+            $formattedOrders[$day] = $ordersForDay->map(function ($order) {
+                return [
+                    'customer_number' => $order->customer_number,
+                    'status' => $order->status, // You can add more fields if needed
+                    'collection_date' => $order->collection_date
+                ];
+            });
+        }
+
+        // Returning the orders grouped by day with customer number and status
+        return response()->json($formattedOrders);
     }
 }
