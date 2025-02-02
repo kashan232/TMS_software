@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderReadyMail;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderTracking;
@@ -9,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class OrderManagementController extends Controller
 {
@@ -96,8 +98,12 @@ class OrderManagementController extends Controller
         if (Auth::id()) {
             $userId = Auth::id();
 
-            $Orders = Order::where('admin_or_user_id', $userId)->get(); // Adjust according to your database structure
-            // dd($Orders);
+            $Orders = Order::where('admin_or_user_id', $userId)
+                ->with('customer') // Ye customer data load karega
+                ->get();
+
+            // dd($Orders); // Check karein ke email aa raha hai ya nahi
+
             return view('admin_panel.order.orders', [
                 'Orders' => $Orders,
             ]);
@@ -231,6 +237,11 @@ class OrderManagementController extends Controller
         $order->status = $request->status;
         $order->delivery_description = $request->description;
         $order->save();
+
+        // Agar order "Ready" ho gaya to customer ko email bhejo
+        if ($order->status == "Ready" && $order->customer) {
+            Mail::to($order->customer->email)->send(new OrderReadyMail($order));
+        }
 
         return response()->json(['success' => true]);
     }

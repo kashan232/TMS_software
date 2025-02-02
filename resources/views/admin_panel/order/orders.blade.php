@@ -82,7 +82,7 @@
                                         @foreach ($Orders as $order)
                                         <tr>
                                             <td>{{ $order->id }}</td>
-                                            <td>#{{ $order->customer_number }}</td>
+                                            <td>#{{ $order->customer_number }} <br> {{ $order->customer ? $order->customer->email : 'No Email Found' }}</td>
                                             <td>{{ $order->order_description }}</td>
                                             <td>
                                                 @php
@@ -134,6 +134,7 @@
                                                     <!-- Payment Button -->
                                                     <a class="btn btn-success btn-xs d-flex align-items-center gap-1 open-payment-modal"
                                                         data-id="{{ $order->id }}"
+                                                        
                                                         data-customer="{{ $order->customer_number }}"
                                                         data-remaining="{{ $order->remaining }}"
                                                         data-bs-toggle="tooltip"
@@ -164,6 +165,7 @@
                                                     <!-- Order Status Button -->
                                                     <button class="btn btn-warning btn-xs d-flex align-items-center gap-1 open-status-modal"
                                                         data-id="{{ $order->id }}"
+                                                        data-email="{{ $order->customer->email }}"
                                                         data-status="{{ $order->status }}"
                                                         data-description="{{ $order->delivery_description }}"
                                                         data-bs-toggle="tooltip"
@@ -197,7 +199,7 @@
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="orderId">
-
+                    <input type="text" id="customerEmail">
                     <label for="orderStatus" class="form-label">Select Status</label>
                     <select id="orderStatus" class="form-select">
                         <option value="Ready">Ready</option>
@@ -236,15 +238,16 @@
             let orderId = $(this).data('id');
             let customerNumber = $(this).data('customer');
             let remaining = $(this).data('remaining');
-
+            
             $('#order_id').val(orderId);
             $('#customer_number').val(customerNumber);
             $('#remaining_amount').val(remaining);
             $('#pay_amount').val('');
             $('#new_remaining').val(remaining); // New Remaining Field Updated
-
             $('#paymentModal').modal('show');
         });
+
+      
 
         // Calculate Remaining Amount Live
         $('#pay_amount').on('input', function() {
@@ -295,10 +298,12 @@
                 let orderId = $(this).data("id");
                 let currentStatus = $(this).data("status");
                 let description = $(this).data("description");
+                let customerEmail = $(this).data('email');
 
                 $("#orderId").val(orderId);
                 $("#orderStatus").val(currentStatus);
                 $("#deliveryDescription").val(description);
+                $('#customerEmail').val(customerEmail);
 
                 $("#orderStatusModal").modal("show");
             });
