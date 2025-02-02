@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="col-xl-4 col-xxl-6 col-lg-6 col-sm-6">
-                    <div class="widget-stat card shadow bg-primary text-dark rounded-lg">
+                    <div class="widget-stat card shadow bg-primary text-white rounded-lg">
                         <div class="card-body p-4">
                             <div class="media">
                                 <span class="me-3">

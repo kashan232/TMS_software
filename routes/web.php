@@ -9,6 +9,7 @@ use App\Http\Controllers\PriceListController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\ExpenseManageController;
+use App\Http\Controllers\ReportsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -95,6 +96,11 @@ Route::post('/order/update-status', [OrderManagementController::class, 'orderupd
 Route::get('/order-calender', [OrderManagementController::class, 'order_calender'])->name('order-calender');
 Route::post('/update-order-status', [OrderManagementController::class, 'updateStatus'])->name('update.order.status');
 Route::get('/get_orders', [OrderManagementController::class, 'getOrders'])->name('get-orders');
+
+
+Route::get('/reports-staff-expense', [ReportsController::class, 'reports_staff_expense'])->name('reports-staff-expense');
+Route::get('/fetch-staff-expenses', [ReportsController::class, 'fetch_staff_expenses'])->name('fetch-staff-expenses');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

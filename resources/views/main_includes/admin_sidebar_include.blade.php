@@ -8,7 +8,8 @@
                 </a>
             </li>
 
-            <li><a href="{{ route('order-calender') }}" class="ai-icon" aria-expanded="false">
+            <li>
+                <a href="{{ route('order-calender') }}" class="ai-icon" aria-expanded="false">
                     <i class="fas fa-calendar-week"></i>
                     <span class="nav-text">Calender</span>
                 </a>
@@ -50,12 +51,14 @@
                     <li><a href="{{ route('view-measurement-parts') }}">View Measurement Parts</a></li>
                 </ul>
             </li>
-            <li><a href="{{ route('price-list') }}" class="ai-icon" aria-expanded="false">
+            <li>
+                <a href="{{ route('price-list') }}" class="ai-icon" aria-expanded="false">
                     <i class="fas fa-money-bill"></i>
                     <span class="nav-text">Price Management</span>
                 </a>
             </li>
-            <li><a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
+            <li>
+                <a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
                     <i class="fas fa-user"></i>
                     <span class="nav-text">Manage Staff</span>
                 </a>
@@ -70,7 +73,8 @@
                 </ul>
             </li>
             
-            <li><a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
+            <li>
+                <a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
                     <i class="fas fa-wallet"></i>
                     <span class="nav-text">Expenses</span>
                 </a>
@@ -79,18 +83,18 @@
                     <li><a href="{{ route('expenses') }}">View & Edit Expense</a></li>
                     <li><a href="{{ route('add-expense-category') }}">Add Expenses Category</a></li>
                     <li><a href="{{ route('expenses') }}">View & Edit Expense Category</a></li>
-
-
-                    
                 </ul>
             </li>
-            
-            <li><a href="#" class="ai-icon" aria-expanded="false">
-                    <i class="flaticon-381-list"></i>
-                    <span class="nav-text">Report</span>
-                </a>
-            </li>
 
+            <li>
+                <a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
+                    <i class="fas fa-chart-pie"></i>
+                    <span class="nav-text">Reports</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{ route('reports-staff-expense') }}">Staff Expenses Record</a></li>
+                </ul>
+            </li>
         </ul>
     </div>
 </div>

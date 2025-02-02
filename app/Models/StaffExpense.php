@@ -13,7 +13,8 @@ class StaffExpense extends Model
 
     protected $guarded = [];
 
-
+    protected $table = 'staff_expenses';
+    
     // StaffExpense.php (Model)
     public function staff()
     {
