@@ -14,5 +14,12 @@ class Expense extends Model
     use SoftDeletes;
     
     protected $guarded = [];
+
+    public function addExpenses()
+    {
+        return $this->hasMany(AddExpenses::class, 'category_id', 'id');
+    }
+
+    
 }
 

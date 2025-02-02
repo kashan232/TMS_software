@@ -80,7 +80,7 @@
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="{{ route('add-expenses') }}">Add Expenses</a></li>
-                    <li><a href="{{ route('expenses') }}">View & Edit Expense</a></li>
+                    <li><a href="{{ route('view_all_expenses') }}">View & Edit Expense</a></li>
                     <li><a href="{{ route('add-expense-category') }}">Add Expenses Category</a></li>
                     <li><a href="{{ route('expenses') }}">View & Edit Expense Category</a></li>
                 </ul>

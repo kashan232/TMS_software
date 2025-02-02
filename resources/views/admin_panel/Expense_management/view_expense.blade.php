@@ -41,7 +41,7 @@
                                                 <td>{{ $type->category_name }}</td>
 
                                                 <td>
-                                                    <div class="d-flex">
+                                                    <div class="d-flex py-3">
                                                         <a href="javascript:void(0);" class="btn btn-primary edit-btn shadow btn-sm sharp me-1">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </a>
