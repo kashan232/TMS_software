@@ -47,7 +47,7 @@ class ExpenseManageController extends Controller
             $userId = Auth::id();
 
             $view_expenses = Expense::where('admin_or_user_id', $userId)->get(); // Adjust according to your database structure
-            
+
             return view('admin_panel.Expense_management.view_expense', [
                 'view_expenses' => $view_expenses,
             ]);
@@ -55,8 +55,8 @@ class ExpenseManageController extends Controller
             return redirect()->back();
         }
     }
-     
-        
+
+
 
     public function staff_expenses()
     {
@@ -72,16 +72,16 @@ class ExpenseManageController extends Controller
     }
 
     public function add_expenses()
-    {  
+    {
         if (Auth::id()) {
-                $userId = Auth::id();
-        
-                // Fetching data from the Expense model
-                $categories = Expense::where('admin_or_user_id', $userId)->pluck('category_name', 'id'); // Fetch category_name and id
-                return view('admin_panel.Expense_management.add_expenses', compact('categories'));
-            } else {
-                return redirect()->back();
-            }
+            $userId = Auth::id();
+
+            // Fetching data from the Expense model
+            $categories = Expense::where('admin_or_user_id', $userId)->pluck('category_name', 'id'); // Fetch category_name and id
+            return view('admin_panel.Expense_management.add_expenses', compact('categories'));
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function store_expenses(Request $request)
@@ -100,13 +100,65 @@ class ExpenseManageController extends Controller
                 'created_at'          => now(),
                 'updated_at'          => now(),
             ]);
-            
+
             return redirect()->back()->with('success', 'Expense has been created successfully');
-                    }            else {
+        } else {
             return redirect()->back();
         }
-
     }
+
+
+    public function editexpenses($id)
+    {
+        if (Auth::id()) {
+            $userId = Auth::id();
+            $expense = AddExpenses::findOrFail($id);
+            $categories = Expense::where('admin_or_user_id', $userId)->pluck('category_name', 'id');
+
+            return view('admin_panel.Expense_management.edit_expenses', compact('expense', 'categories'));
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function updateExpense(Request $request, $id)
+    {
+        try {
+            $request->validate([
+                'category_id' => 'required|exists:categories,id',
+                'title' => 'required|string|max:255',
+                'expense_amount' => 'required|numeric',
+                'date' => 'required|date',
+                'description' => 'nullable|string'
+            ]);
+
+            $expense = AddExpenses::findOrFail($id);
+            $expense->update([
+                'category_id' => $request->category_id,
+                'title' => $request->title,
+                'expense_amount' => $request->expense_amount,
+                'date' => $request->date,
+                'description' => $request->description
+            ]);
+
+            return redirect()->back()->with('success', 'Expense updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Error updating expense: ' . $e->getMessage());
+        }
+    }
+
+    public function deleteExpense(Request $request)
+    {
+        try {
+            $expense = AddExpenses::findOrFail($request->id);
+            $expense->delete();
+
+            return response()->json(['success' => true, 'message' => 'Expense deleted successfully.']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error deleting expense: ' . $e->getMessage()]);
+        }
+    }
+
 
     public function view_all_expenses(Request $request)
     {
@@ -126,30 +178,23 @@ class ExpenseManageController extends Controller
             return redirect()->back();
         }
     }
-    
-    public function update(Request $request, $id)
+
+    public function updateCategory(Request $request)
     {
-        try {
-            $request->validate([
-                'category_id' => 'required|exists:categories,id',
-                'title' => 'required|string|max:255',
-                'expense_amount' => 'required|numeric',
-                'date' => 'required|date',
-                'description' => 'nullable|string'
-            ]);
-    
-            $expense = AddExpenses::findOrFail($id);
-            $expense->update($request->all());
-    
+        $category = Expense::find($request->id);
+
+        if ($category) {
+            $category->category_name = $request->category_name;
+            $category->save();
+
             return response()->json(['success' => true]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'error' => $e->getMessage()
-            ], 500);
         }
+
+        return response()->json(['success' => false]);
     }
-    
+
+
+
     public function destroy($id)
     {
         $expense = AddExpenses::findOrFail($id);
@@ -157,6 +202,4 @@ class ExpenseManageController extends Controller
 
         return response()->json(['success' => true]);
     }
-
-
 }

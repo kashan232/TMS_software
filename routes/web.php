@@ -69,17 +69,10 @@ Route::get('/expenses', [ExpenseManageController::class, 'view_expenses'])->midd
 Route::get('/add-expenses', [ExpenseManageController::class, 'add_expenses'])->middleware(['auth','admin'])->name('add-expenses');
 Route::post('/store-expenses', [ExpenseManageController::class, 'store_expenses'])->name('store-expenses');
 Route::get('/view_all_expenses', [ExpenseManageController::class, 'view_all_expenses'])->middleware(['auth','admin'])->name('view_all_expenses');
-
-// edit 
-Route::put('/update-expense/{id}', [ExpenseManageController::class, 'update'])->name('update-expense');
-
-Route::delete('/delete-expense/{id}', [ExpenseManageController::class, 'destroy'])->name('delete-expense');
-
-
-// Customer
-
-
-
+Route::post('/update-category', [ExpenseManageController::class, 'updateCategory'])->name('update-category');
+Route::get('/expenses/edit/{id}', [ExpenseManageController::class, 'editexpenses'])->name('expenses.edit');
+Route::put('/update-expense/{id}', [ExpenseManageController::class, 'updateExpense'])->name('update-expense');
+Route::post('/delete-expense', [ExpenseManageController::class, 'deleteExpense'])->name('delete-expense');
 
 Route::get('/add-Customer', [CustomerController::class, 'add_Customer'])->middleware(['auth','admin'])->name('add-Customer');
 Route::post('/customers/store', [CustomerController::class, 'store'])->name('customers.store');
