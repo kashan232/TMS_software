@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CustomerMail;
 use App\Models\ClothType;
 use App\Models\Customer;
 use App\Models\CustomerMeasurement;
 use App\Models\MeasurementPart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class CustomerController extends Controller
 {
@@ -38,6 +40,7 @@ class CustomerController extends Controller
                 'admin_or_user_id' => $userId,
                 'customer_number' => $request->customer_number,
                 'full_name' => $request->full_name,
+                'email' => $request->email,
                 'address' => $request->address,
                 'phone_number' => $request->phone_number,
                 'city' => $request->city,
@@ -76,6 +79,7 @@ class CustomerController extends Controller
                 // Update customer details
                 $customer->customer_number = $request->customer_number;
                 $customer->full_name = $request->full_name;
+                $customer->email = $request->email;
                 $customer->address = $request->address;
                 $customer->phone_number = $request->phone_number;
                 $customer->gender = $request->gender;
@@ -168,5 +172,34 @@ class CustomerController extends Controller
         }
 
         return redirect()->back()->with('success', 'Measurements saved successfully.');
+    }
+
+    public function showEmailForm($id)
+    {
+        $customer = Customer::findOrFail($id);
+        return view('admin_panel.customer.send_email', compact('customer'));
+    }
+
+    public function sendEmail(Request $request)
+    {
+        $request->validate([
+            'customer_id' => 'required|exists:customers,id',
+            'email' => 'required|email',
+            'subject' => 'required',
+            'message' => 'required'
+        ]);
+
+        $customer = Customer::findOrFail($request->customer_id);
+
+        $data = [
+            'name' => $customer->full_name,
+            'email' => $request->email,
+            'subject' => $request->subject,
+            'message' => $request->message
+        ];
+
+        Mail::to($request->email)->send(new CustomerMail($data));
+
+        return redirect()->back()->with('success', 'Email Sent Successfully!');
     }
 }

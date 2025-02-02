@@ -1,6 +1,6 @@
 <div class="nav-header">
 	<a href="#" class="brand-logo pt-5 pb-5">
-		<img src="/TMS_software/public/images/TMS_white_logo.png" alt="image" style="width: 140px;">
+		<img src="/TMS_software/public/images/TMS_white_logo.png" alt="image" style="width: 150px;">
 
 	</a>
 
@@ -23,19 +23,11 @@
 
 				<ul class="navbar-nav header-right">
 					<li class="nav-item dropdown notification_dropdown">
-						<div class="input-group search-area">
-							<input type="text" class="form-control" placeholder="Search here...">
-							<span class="input-group-text"><a href="javascript:void(0)"><i class="flaticon-381-search-2"></i></a></span>
-						</div>
-					</li>
-					<li class="nav-item dropdown notification_dropdown">
 						<a class="nav-link bell  primary dz-theme-mode" href="javascript:void(0);">
 							<i id="icon-light" class="fas fa-sun"></i>
 							<i id="icon-dark" class="fas fa-moon"></i>
 						</a>
 					</li>
-
-
 					<li class="nav-item dropdown header-profile">
 						<a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
 							<img src="/TMS_software/public/images/profile/profile.png" width="20" alt="">

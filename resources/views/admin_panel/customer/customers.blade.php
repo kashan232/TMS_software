@@ -25,6 +25,7 @@
                                             <th>S.No</th>
                                             <th>Customer Number</th>
                                             <th>Full Name</th>
+                                            <th>Email</th>
                                             <th>Address</th>
                                             <th>Phone Number</th>
                                             <th>City</th>
@@ -37,31 +38,43 @@
                                         @foreach($Customers as $Customer)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $Customer->customer_number }}</td>
+                                            <td>#{{ $Customer->customer_number }}</td>
                                             <td>{{ $Customer->full_name }}</td>
+                                            <td>{{ $Customer->email }}</td>
                                             <td>{{ $Customer->address }}</td>
                                             <td>{{ $Customer->phone_number }}</td>
                                             <td>{{ $Customer->city }}</td>
                                             <td>{{ ucfirst($Customer->gender) }}</td>
                                             <td>{{ $Customer->comment }}</td>
-                                            <td>
-                                                <!-- Add Measurement Button -->
-                                                <a href="{{ route('customer-add-measurement',['id' => $Customer->id ]) }}" class="btn btn-success  text-white me-2">Add Meas</a>
+                                            <td class="text-center">
+                                                <div class="d-flex justify-content-center gap-2">
+                                                    <!-- Add Measurement Button -->
+                                                    <a href="{{ route('customer-add-measurement', ['id' => $Customer->id ]) }}" class="btn btn-success btn-sm text-white">
+                                                        Measurement
+                                                    </a>
 
-                                                <!-- Edit Button -->
-                                                <a href="javascript:void(0);"
-                                                    class="btn btn-primary edit-btn shadow btn-sm sharp"
-                                                    data-id="{{ $Customer->id }}"
-                                                    data-customer_number="{{ $Customer->customer_number }}"
-                                                    data-full_name="{{ $Customer->full_name }}"
-                                                    data-address="{{ $Customer->address }}"
-                                                    data-phone_number="{{ $Customer->phone_number }}"
-                                                    data-city="{{ $Customer->city }}"
-                                                    data-gender="{{ $Customer->gender }}"
-                                                    data-comment="{{ $Customer->comment }}">
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                </a>
+                                                    <!-- Edit Button -->
+                                                    <a href="javascript:void(0);"
+                                                        class="btn btn-primary btn-sm edit-btn shadow"
+                                                        data-id="{{ $Customer->id }}"
+                                                        data-customer_number="{{ $Customer->customer_number }}"
+                                                        data-full_name="{{ $Customer->full_name }}"
+                                                        data-email="{{ $Customer->email }}"
+                                                        data-address="{{ $Customer->address }}"
+                                                        data-phone_number="{{ $Customer->phone_number }}"
+                                                        data-city="{{ $Customer->city }}"
+                                                        data-gender="{{ $Customer->gender }}"
+                                                        data-comment="{{ $Customer->comment }}">
+                                                        <i class="fas fa-pencil-alt"></i>
+                                                    </a>
+
+                                                    <!-- Send Email Button -->
+                                                    <a href="{{ route('customer.send-email', ['id' => $Customer->id]) }}" class="btn btn-info btn-sm text-white">
+                                                        Email
+                                                    </a>
+                                                </div>
                                             </td>
+
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -97,6 +110,10 @@
                             <div class="col-md-6 mb-3">
                                 <label for="edit_full_name" class="form-label">Full Name</label>
                                 <input type="text" class="form-control" id="edit_full_name" name="full_name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="edit_Email" class="form-label">Email</label>
+                                <input type="text" class="form-control" id="edit_Email" name="email" required>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="edit_address" class="form-label">Address</label>
@@ -147,11 +164,14 @@
         $('#edit_customer_id').val($(this).data('id'));
         $('#edit_customer_number').val($(this).data('customer_number'));
         $('#edit_full_name').val($(this).data('full_name'));
+        $('#edit_Email').val($(this).data('email'));
         $('#edit_address').val($(this).data('address'));
         $('#edit_phone_number').val($(this).data('phone_number'));
         $('#edit_city').val($(this).data('city'));
         $('#edit_gender').val($(this).data('gender'));
         $('#edit_comment').val($(this).data('comment'));
+
+
     });
 </script>
 

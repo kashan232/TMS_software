@@ -9,6 +9,7 @@ use App\Http\Controllers\PriceListController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\ExpenseManageController;
+use App\Http\Controllers\ReportsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -87,6 +88,8 @@ Route::post('/update-customer', [CustomerController::class, 'updateCustomer'])->
 Route::get('/customer-add-measurement/{id}', [CustomerController::class, 'customer_add_measurement'])->middleware(['auth','admin'])->name('customer-add-measurement');
 Route::get('/fetch-measurement-parts', [CustomerController::class, 'fetchMeasurementParts'])->name('fetch-measurement-parts');
 Route::post('/measurements/{customerId}', [CustomerController::class, 'customer_measruemt_store'])->name('measurements.store');
+Route::get('/customer/send-email/{id}', [CustomerController::class, 'showEmailForm'])->name('customer.send-email');
+Route::post('/customer/send-email', [CustomerController::class, 'sendEmail'])->name('customer.send-email.post');
 
 
 // Order management
@@ -94,6 +97,21 @@ Route::get('/add-Order', [OrderManagementController::class, 'add_Order'])->middl
 Route::post('/Order/store', [OrderManagementController::class, 'saveOrder'])->name('Order.store');
 Route::get('/Orders', [OrderManagementController::class, 'Orders'])->middleware(['auth','admin'])->name('Orders');
 Route::get('/order/receipt/{id}', [OrderManagementController::class, 'showReceipt'])->name('order.receipt');
+Route::post('/payment/update', [OrderManagementController::class, 'updatePayment'])->name('payment.update');
+Route::get('/order/edit/{id}', [OrderManagementController::class, 'editOrder'])->name('order.edit');
+Route::post('/orders/{order}', [OrderManagementController::class, 'updateOrder'])->name('orders.update');
+Route::get('/Orders-tracker', [OrderManagementController::class, 'Orders_tracker'])->name('Orders-tracker');
+Route::get('/Orders-tracker/view/{id}', [OrderManagementController::class, 'viewOrder'])->name('order.track.view');
+Route::post('/order/update-status', [OrderManagementController::class, 'orderupdateStatus'])->name('order.updateStatus');
+
+
+Route::get('/order-calender', [OrderManagementController::class, 'order_calender'])->name('order-calender');
+Route::post('/update-order-status', [OrderManagementController::class, 'updateStatus'])->name('update.order.status');
+Route::get('/get_orders', [OrderManagementController::class, 'getOrders'])->name('get-orders');
+
+
+Route::get('/reports-staff-expense', [ReportsController::class, 'reports_staff_expense'])->name('reports-staff-expense');
+Route::get('/fetch-staff-expenses', [ReportsController::class, 'fetch_staff_expenses'])->name('fetch-staff-expenses');
 
 
 Route::middleware('auth')->group(function () {
