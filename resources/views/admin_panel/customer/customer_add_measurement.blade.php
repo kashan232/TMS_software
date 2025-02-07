@@ -42,7 +42,7 @@
                                             $key = $clothType->id . '-' . $part->id;
                                             $existingValue = $measurements[$key]->value ?? '';
                                             @endphp
-                                            <div class="col-6 col-sm-4 col-md-2 mb-2">
+                                            <div class="col-3 col-sm-2 col-md-1 mb-2">
                                                 <label class="form-label d-block small text-muted">{{ $part->Measurement_name }}</label>
                                                 <input type="text"
                                                     name="measurements[{{ $clothType->id }}][{{ $part->id }}]"

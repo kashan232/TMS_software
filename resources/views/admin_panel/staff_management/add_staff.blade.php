@@ -61,11 +61,6 @@
                                             <label class="form-label">Staff Phone Number</label>
                                             <input type="number" class="form-control" name="phone_number" placeholder="Phone Number">
                                         </div>
-
-                                        <div class="mb-3 col-md-6">
-                                            <label class="form-label">Staff Salary</label>
-                                            <input type="number" class="form-control" name="salary" placeholder="Salary In PKR">
-                                        </div>
                                     </div>
 
                                     <button type="submit" class="btn btn-primary">Save</button>

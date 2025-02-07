@@ -30,7 +30,6 @@
                                             <th>Phone Number</th>
                                             <th>City</th>
                                             <th>Gender</th>
-                                            <th>Comment</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -45,7 +44,6 @@
                                             <td>{{ $Customer->phone_number }}</td>
                                             <td>{{ $Customer->city }}</td>
                                             <td>{{ ucfirst($Customer->gender) }}</td>
-                                            <td>{{ $Customer->comment }}</td>
                                             <td class="text-center">
                                                 <div class="d-flex justify-content-center gap-2">
                                                     <!-- Add Measurement Button -->
@@ -63,8 +61,7 @@
                                                         data-address="{{ $Customer->address }}"
                                                         data-phone_number="{{ $Customer->phone_number }}"
                                                         data-city="{{ $Customer->city }}"
-                                                        data-gender="{{ $Customer->gender }}"
-                                                        data-comment="{{ $Customer->comment }}">
+                                                        data-gender="{{ $Customer->gender }}">
                                                         <i class="fas fa-pencil-alt"></i>
                                                     </a>
 
@@ -135,10 +132,7 @@
                                     <option value="kids">Kids</option>
                                 </select>
                             </div>
-                            <div class="col-md-12 mb-3">
-                                <label for="edit_comment" class="form-label">Comment</label>
-                                <textarea class="form-control" id="edit_comment" name="comment" rows="3"></textarea>
-                            </div>
+                           
                         </div>
 
 
@@ -169,7 +163,6 @@
         $('#edit_phone_number').val($(this).data('phone_number'));
         $('#edit_city').val($(this).data('city'));
         $('#edit_gender').val($(this).data('gender'));
-        $('#edit_comment').val($(this).data('comment'));
 
 
     });

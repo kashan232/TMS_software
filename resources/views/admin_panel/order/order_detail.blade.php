@@ -22,6 +22,10 @@
                                     <td>#{{ $order->customer_number }}</td>
                                 </tr>
                                 <tr>
+                                    <th>Customer Name:</th>
+                                    <td>{{ $order->customer->full_name }}</td>
+                                </tr>
+                                <tr>
                                     <th>Order Description:</th>
                                     <td>{{ $order->order_description }}</td>
                                 </tr>

@@ -100,7 +100,7 @@ class OrderManagementController extends Controller
 
             $Orders = Order::where('admin_or_user_id', $userId)
                 ->with('customer') // Ye customer data load karega
-                ->get();
+                ->paginate(10);
 
             // dd($Orders); // Check karein ke email aa raha hai ya nahi
 
@@ -155,7 +155,6 @@ class OrderManagementController extends Controller
     {
         if (Auth::id()) {
             $userId = Auth::id();
-            dd($request);
             // Retrieve the existing order
             $order = Order::findOrFail($orderId);
 
@@ -215,8 +214,7 @@ class OrderManagementController extends Controller
 
     public function viewOrder($id)
     {
-        $order = Order::findOrFail($id);
-
+        $order = Order::with('customer')->findOrFail($id);
         // Decode arrays
         $order->cloth_types = json_decode($order->cloth_type, true);
         $order->quantities = json_decode($order->quantity, true);

@@ -123,15 +123,7 @@ class ExpenseManageController extends Controller
 
     public function updateExpense(Request $request, $id)
     {
-        try {
-            $request->validate([
-                'category_id' => 'required|exists:categories,id',
-                'title' => 'required|string|max:255',
-                'expense_amount' => 'required|numeric',
-                'date' => 'required|date',
-                'description' => 'nullable|string'
-            ]);
-
+        if (Auth::id()) {
             $expense = AddExpenses::findOrFail($id);
             $expense->update([
                 'category_id' => $request->category_id,
@@ -142,8 +134,8 @@ class ExpenseManageController extends Controller
             ]);
 
             return redirect()->back()->with('success', 'Expense updated successfully');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Error updating expense: ' . $e->getMessage());
+        } else {
+            return redirect()->back();
         }
     }
 

@@ -45,7 +45,6 @@ class CustomerController extends Controller
                 'phone_number' => $request->phone_number,
                 'city' => $request->city,
                 'gender' => $request->gender,
-                'comment' => $request->comment,
             ]);
 
             return redirect()->back()->with('success', 'Customer added successfully!');
@@ -83,8 +82,7 @@ class CustomerController extends Controller
                 $customer->address = $request->address;
                 $customer->phone_number = $request->phone_number;
                 $customer->gender = $request->gender;
-                $customer->comment = $request->comment;
-                $customer->save();
+                    $customer->save();
 
                 return response()->json([
                     'status' => 'success',

@@ -63,15 +63,9 @@
                                                 <label for="gender">Gender</label>
                                                 <select class="form-control" id="gender" name="gender" required>
                                                     <option value="">Select Gender</option>
-                                                    <option value="kids">Kids</option>
                                                     <option value="male">Male</option>
+                                                    <option value="kids">Kids</option>
                                                 </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="comment">Comment</label>
-                                                <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
                                             </div>
                                         </div>
                                     </div>

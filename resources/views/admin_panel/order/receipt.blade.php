@@ -85,6 +85,9 @@
                                     </tr>
                                 </tfoot>
                             </table>
+                            <div class="text-center mt-3 border-top pt-2">
+                                <p class="mb-0" style="font-size: 12px;">Designed & Developed by <strong>ProWave Software Solution</strong></p>
+                            </div>
                         </div>
                     </div>
                 </div>

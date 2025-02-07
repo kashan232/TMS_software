@@ -85,7 +85,6 @@ class StaffController extends Controller
                 'full_name'     => $request->full_name,
                 'address'         => $request->address,
                 'phone_number'         => $request->phone_number,
-                'salary'         => $request->salary,
                 'created_at'       => Carbon::now(),
                 'updated_at'       => Carbon::now(),
             ]);
@@ -127,7 +126,6 @@ class StaffController extends Controller
                 'full_name'     => $request->full_name,
                 'address'         => $request->address,
                 'phone_number'         => $request->phone_number,
-                'salary'         => $request->salary,
                 'updated_at'       => Carbon::now(),
             ]);
 

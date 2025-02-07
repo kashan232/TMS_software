@@ -2,7 +2,27 @@
 <div id="main-wrapper">
     @include('main_includes.navbar_include')
     @include('main_includes.admin_sidebar_include')
-
+<style>
+    .bottom--impo th {
+        padding-right: 28px !important;
+        font-size: 22px !important;
+        color: #000 !important;
+        text-align: center;
+      }
+    
+      .h-5 {
+        width: 30px;
+      }
+    
+      .leading-5 {
+        padding: 20px 0px;
+      }
+    
+      .leading-5 span:nth-child(3) {
+        color: red;
+        font-weight: 500;
+      }
+</style>
     <div class="modal fade" id="paymentModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -61,7 +81,7 @@
                                 <table id="example" class="display dataTablesCard table-responsive-xl dataTable no-footer" style="min-width: 845px">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
+                                            <th>Sno</th>
                                             <th>Customer Id</th>
                                             <th>Description</th>
                                             <th>Cloth Type</th>
@@ -72,6 +92,7 @@
                                             <th>Net Total</th>
                                             <th>Advance Paid</th>
                                             <th>Remaining</th>
+                                            <th>Receiving Date</th>
                                             <th>Collection Date</th>
                                             <th>Status</th>
                                             <th>Action</th>
@@ -82,7 +103,7 @@
                                         @foreach ($Orders as $order)
                                         <tr>
                                             <td>{{ $order->id }}</td>
-                                            <td>#{{ $order->customer_number }} <br> {{ $order->customer ? $order->customer->email : 'No Email Found' }}</td>
+                                            <td>#{{ $order->customer_number }} <br> {{ $order->customer->full_name }} <br> {{ $order->customer->email }}</td>
                                             <td>{{ $order->order_description }}</td>
                                             <td>
                                                 @php
@@ -113,6 +134,7 @@
                                             <td>{{ $order->net_total }}</td>
                                             <td>{{ $order->advance_paid }}</td>
                                             <td>{{ $order->remaining }}</td>
+                                            <td>{{ $order->order_receiving_date }}</td>
                                             <td>{{ $order->collection_date }}</td>
                                             <td class="text-center">
                                                 @php
@@ -181,6 +203,9 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                <div class="py-5">
+                                    {{ $Orders->appends(request()->input())->links() }}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -199,8 +224,8 @@
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="orderId">
-                    <input type="text" id="customerEmail">
-                    <label for="orderStatus" class="form-label">Select Status</label>
+                    <input type="text" id="customerEmail" class="form-control">
+                    <label for="orderStatus" class="form-label mt-3">Select Status</label>
                     <select id="orderStatus" class="form-select">
                         <option value="Ready">Ready</option>
                         <option value="Delivered">Delivered</option>

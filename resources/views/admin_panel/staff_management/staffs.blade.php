@@ -32,7 +32,6 @@
                                                 <th>Full Name</th>
                                                 <th>Address</th>
                                                 <th>Phone Number</th>
-                                                <th>Salary</th>
                                                 <th>Previous Bal</th>
                                                 <th>Total Amount</th>
                                                 <th>Paid Amount</th>
@@ -48,7 +47,6 @@
                                                 <td>{{ $Staff->full_name ?? 'N/A' }}</td>
                                                 <td>{{ $Staff->address ?? 'N/A' }}</td>
                                                 <td>{{ $Staff->phone_number ?? 'N/A' }}</td>
-                                                <td>{{ $Staff->salary ?? 'N/A' }}</td>
                                                 <td>{{ $Staff->previous_balance ?? 0 }}</td>
                                                 <td>{{ $Staff->total_amount ?? 0 }}</td>
                                                 <td>{{ $Staff->total_paid ?? 0 }}</td>
@@ -69,8 +67,7 @@
                                                             data-type-designations="{{ $Staff->designations ?? '' }}"
                                                             data-type-full_name="{{ $Staff->full_name ?? '' }}"
                                                             data-type-address="{{ $Staff->address ?? '' }}"
-                                                            data-type-phone_number="{{ $Staff->phone_number ?? '' }}"
-                                                            data-type-salary="{{ $Staff->salary ?? '' }}">
+                                                            data-type-phone_number="{{ $Staff->phone_number ?? '' }}">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </a>
                                                     </div>
