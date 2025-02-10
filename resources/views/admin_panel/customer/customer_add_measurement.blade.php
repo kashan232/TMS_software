@@ -32,6 +32,12 @@
                                         <p class="mb-1"><strong>Address:</strong> {{ $customer->address }}</p>
                                     </div>
 
+                                    <!-- Description Box (Before Measurements) -->
+                                    <div class="mb-4">
+                                        <h6 class="text-dark border-bottom pb-1">Description</h6>
+                                        <textarea name="description" class="form-control mt-2" placeholder="Enter a description for the customer measurements">{{ $customerDescription ?? '' }}</textarea>
+                                    </div>
+
                                     <!-- Cloth Types and Measurement Parts -->
                                     @foreach ($clothTypes as $clothType)
                                     <div class="mb-4">
@@ -52,9 +58,35 @@
                                             </div>
                                             @endforeach
                                         </div>
+
+                                        <!-- Cloth Variants (Yes/No for each variant under this cloth type) -->
+                                        <div class="mt-3">
+    <h6 class="text-dark">Cloth Variants</h6>
+    <div class="d-flex flex-wrap align-items-center"> <!-- Use flexbox to keep items in one row -->
+        @foreach ($clothVariants->where('cloth_type_name', $clothType->cloth_type_name)->unique('variants_name') as $variant)
+        @php
+            $selectedVariant = $existingVariants[$variant->id] ?? null; // Get saved value (yes/no)
+        @endphp
+        <div class="me-4 d-flex align-items-center"> <!-- Add margin between items -->
+            <span class="fw-bold me-2">{{ $variant->variants_name }}:</span>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="cloth_variant[{{ $variant->id }}]" value="yes"
+                    {{ $selectedVariant == 'yes' ? 'checked' : '' }} />
+                <label class="form-check-label">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="cloth_variant[{{ $variant->id }}]" value="no"
+                    {{ $selectedVariant == 'no' ? 'checked' : '' }} />
+                <label class="form-check-label">No</label>
+            </div>
+        </div>
+        @endforeach
+    </div>
+</div>
+
+
                                     </div>
                                     @endforeach
-
 
                                     <button type="submit" class="btn btn-primary shadow mt-3">Save</button>
                                 </form>

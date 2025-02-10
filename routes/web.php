@@ -36,6 +36,13 @@ Route::get('/cloth-type', [ClothTypeController::class, 'cloth_type'])->middlewar
 Route::post('/store-cloth-type', [ClothTypeController::class, 'store_cloth_type'])->name('store-cloth-type');
 Route::post('/cloth-type/update', [ClothTypeController::class, 'update'])->name('cloth_type.update');
 
+
+//cloth-type
+Route::get('/cloth-Variants', [ClothTypeController::class, 'cloth_Variants'])->middleware(['auth','admin'])->name('cloth-Variants');
+Route::post('/store-cloth-Variants', [ClothTypeController::class, 'store_cloth_Variants'])->name('store-cloth-Variants');
+Route::post('/cloth-Variants/update', [ClothTypeController::class, 'update'])->name('cloth_Variants.update');
+
+
 // measurment
 Route::get('/create-measurement-parts', [MeasurementPartController::class, 'create_measurement_parts'])->middleware(['auth','admin'])->name('create-measurement-parts');
 Route::post('/measurment_store', [MeasurementPartController::class, 'measurment_store'])->name('measurment_store');

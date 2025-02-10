@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Mail\CustomerMail;
 use App\Models\ClothType;
+use App\Models\ClothVariant;
 use App\Models\Customer;
 use App\Models\CustomerMeasurement;
+use App\Models\CustomerVariant;
 use App\Models\MeasurementPart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -82,7 +84,7 @@ class CustomerController extends Controller
                 $customer->address = $request->address;
                 $customer->phone_number = $request->phone_number;
                 $customer->gender = $request->gender;
-                    $customer->save();
+                $customer->save();
 
                 return response()->json([
                     'status' => 'success',
@@ -104,28 +106,41 @@ class CustomerController extends Controller
         if (Auth::id()) {
             $userId = Auth::id();
 
-            // Fetch customer by ID
+            // Fetch customer
             $customer = Customer::find($id);
 
-            // Fetch cloth types and their measurement parts
+            // Fetch cloth types and measurement parts
             $clothTypes = ClothType::where('admin_or_user_id', $userId)->get();
             $measurementParts = MeasurementPart::where('admin_or_user_id', $userId)->get();
 
+            // Fetch cloth variants
+            $clothVariants = ClothVariant::where('admin_or_user_id', $userId)->get();
+
             // Fetch existing measurements
-            $measurements = CustomerMeasurement::where('customer_id', $id)->get();
+            $measurements = CustomerMeasurement::where('customer_id', $id)->get()->keyBy(function ($item) {
+                return $item->cloth_type_id . '-' . $item->measurement_part_id;
+            });
+            $customerDescription = CustomerMeasurement::where('customer_id', $id)->value('description');
+
+            // Fetch existing customer variants (YES/NO selections)
+            $existingVariants = CustomerVariant::where('customer_id', $id)
+                ->pluck('value', 'variants_part_id'); // Gives [variant_id => 'yes/no']
 
             return view('admin_panel.customer.customer_add_measurement', [
                 'customer' => $customer,
                 'clothTypes' => $clothTypes,
                 'measurementParts' => $measurementParts,
-                'measurements' => $measurements->keyBy(function ($item) {
-                    return $item->cloth_type_id . '-' . $item->measurement_part_id;
-                }),
+                'measurements' => $measurements,
+                'clothVariants' => $clothVariants,
+                'existingVariants' => $existingVariants,  // Pass existing variants
+                'customerDescription' => $customerDescription, // Add this line
             ]);
         } else {
             return redirect()->back();
         }
     }
+
+
 
 
 
@@ -144,24 +159,44 @@ class CustomerController extends Controller
 
     public function customer_measruemt_store(Request $request, $customerId)
     {
-        // dd($customerId); // Checking the request data for debugging
-
         $customer = Customer::findOrFail($customerId);
-        // dd($customer);
+        // Save Measurements
+        if ($request->has('measurements')) {
+            foreach ($request->measurements as $clothTypeId => $parts) {
+                foreach ($parts as $partId => $value) {
+                    if (!empty($value)) {
+                        CustomerMeasurement::updateOrCreate(
+                            [
+                                'customer_id' => $customer->id,
+                                'cloth_type_id' => $clothTypeId,
+                                'measurement_part_id' => $partId,
+                            ],
+                            [
+                                'value' => $value,
+                                'description' => $request->description, // Correct way to save description
+                            ]
+                        );
+                    }
+                }
+            }
+        }
 
 
-        // Loop through the measurements and store them
-        foreach ($request->measurements as $clothTypeId => $parts) {
-            foreach ($parts as $partId => $value) {
-                // Ensure we only save non-null values
-                if ($value !== null) {
-                    CustomerMeasurement::updateOrCreate(
+        // Save Cloth Variants
+        if ($request->has('cloth_variant')) {
+            foreach ($request->cloth_variant as $variantId => $value) {
+                $clothVariant = ClothVariant::find($variantId);
+
+                if ($clothVariant) {
+                    $clothTypeId = $clothVariant->cloth_type_id ?? array_key_first($request->measurements); // Fallback to first cloth type
+
+                    CustomerVariant::updateOrCreate(
                         [
                             'customer_id' => $customer->id,
-                            'cloth_type_id' => $clothTypeId,
-                            'measurement_part_id' => $partId,
+                            'variants_part_id' => $variantId,
                         ],
                         [
+                            'cloth_type_id' => $clothTypeId, // Assign correct cloth type
                             'value' => $value,
                         ]
                     );
@@ -169,8 +204,11 @@ class CustomerController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', 'Measurements saved successfully.');
+
+        return redirect()->back()->with('success', 'Measurements and Variants saved successfully.');
     }
+
+
 
     public function showEmailForm($id)
     {

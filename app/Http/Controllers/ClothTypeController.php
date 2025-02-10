@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ClothType;
+use App\Models\ClothVariant;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -56,4 +57,45 @@ class ClothTypeController extends Controller
 
         return redirect()->back()->with('success', 'Cloth Type updated successfully');
     }
+
+    public function cloth_Variants()
+    {
+        if (Auth::id()) {
+            $userId = Auth::id();
+
+            $ClothTypes = ClothType::where('admin_or_user_id', $userId)->get(); // Adjust according to your database structure
+            $ClothVariants = ClothVariant::where('admin_or_user_id', $userId)->get(); // Adjust according to your database structure
+
+            return view('admin_panel.cloth_type.cloth_variants', [
+                'ClothTypes' => $ClothTypes,
+                'ClothVariants' => $ClothVariants,
+            ]);
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function store_cloth_Variants(Request $request)
+    {
+        $request->validate([
+            'cloth_type_name' => 'required|string',
+            'variants_name' => 'required|array',
+            'variants_name.*' => 'string|min:1',
+        ]);
+
+        $userId = Auth::id();
+
+        foreach ($request->variants_name as $name) {
+            ClothVariant::create([
+                'admin_or_user_id' => $userId,
+                'cloth_type_name' => $request->cloth_type_name,
+                'variants_name' => $name,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'variants Added Successfully');
+    }
+
 }
