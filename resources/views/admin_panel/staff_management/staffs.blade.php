@@ -5,6 +5,41 @@
 
     @include('main_includes.admin_sidebar_include')
 
+    <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Make Payment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="paymentForm">
+                        @csrf
+                        <input type="hidden" id="staff_id" name="staff_id">
+
+                        <div class="mb-3 form-group">
+                            <label class="form-label">Previous Balance</label>
+                            <input type="text" class="form-control" id="previous_balance" name="previous_balance" readonly>
+                        </div>
+
+                        <div class="mb-3 form-group">
+                            <label class="form-label">Total Amount</label>
+                            <input type="text" class="form-control" id="total_amount" name="total_amount" readonly>
+                        </div>
+
+                        <div class="mb-3 form-group">
+                            <label class="form-label">Paid Amount</label>
+                            <input type="number" class="form-control" id="paid_amount" name="paid_amount" placeholder="Enter Paid Amount">
+                        </div>
+
+                        <button type="button" class="btn btn-primary" id="submitPayment">Pay</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="content-body rightside-event">
         <!-- row -->
@@ -61,7 +96,7 @@
                                                 </td>
 
                                                 <td>
-                                                    <div class="d-flex">
+                                                    <div class="d-flex justify-content-center gap-2">
                                                         <a href="javascript:void(0);" class="btn btn-primary edit-btn shadow btn-sm sharp me-1"
                                                             data-type-id="{{ $Staff->id }}"
                                                             data-type-designations="{{ $Staff->designations ?? '' }}"
@@ -70,6 +105,15 @@
                                                             data-type-phone_number="{{ $Staff->phone_number ?? '' }}">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </a>
+
+                                                        <a href="javascript:void(0);" class="btn btn-success payment-btn shadow btn-sm sharp me-1"
+                                                            data-staff-id="{{ $Staff->id }}"
+                                                            data-previous-balance="{{ $Staff->previous_balance }}"
+                                                            data-total-amount="{{ $Staff->total_amount }}"
+                                                            data-paid-amount="{{ $Staff->total_paid }}">
+                                                            Payment
+                                                        </a>
+
                                                     </div>
                                                 </td>
                                             </tr>
@@ -167,5 +211,42 @@
             $('#staff_address').val(staffaddress);
             $('#staff_phone').val(staffphone);
             $('#staff_salary').val(staffsalary);
+        });
+
+        $(document).on('click', '.payment-btn', function() {
+            $('#paymentModal').modal('show');
+
+            let staffId = $(this).data('staff-id');
+            let previousBalance = $(this).data('previous-balance');
+            let totalAmount = $(this).data('total-amount');
+
+            $('#staff_id').val(staffId);
+            $('#previous_balance').val(previousBalance);
+            $('#total_amount').val(totalAmount);
+        });
+
+        $('#submitPayment').on('click', function() {
+            let staffId = $('#staff_id').val();
+            let paidAmount = $('#paid_amount').val();
+            let previousBalance = $('#previous_balance').val();
+
+            if (paidAmount <= 0 || paidAmount > previousBalance) {
+                alert("Invalid Paid Amount");
+                return;
+            }
+
+            $.ajax({
+                url: "{{ route('staffs.make_payment') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    staff_id: staffId,
+                    paid_amount: paidAmount
+                },
+                success: function(response) {
+                    alert("Payment Updated Successfully");
+                    location.reload(); // Table ko update karne ke liye
+                }
+            });
         });
     </script>

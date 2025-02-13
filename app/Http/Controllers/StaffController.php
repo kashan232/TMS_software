@@ -135,6 +135,23 @@ class StaffController extends Controller
         }
     }
 
+    public function makePayment(Request $request)
+    {
+        $staff = Staff::findOrFail($request->staff_id);
+
+        $paidAmount = $request->paid_amount;
+
+        // Paid amount ko previous balance se minus karna aur total paid me add karna
+        $staff->previous_balance -= $paidAmount;
+        $staff->total_paid += $paidAmount;
+
+        $staff->save();
+
+        return redirect()->back()->with('success', 'Staff Payment updated successfully');
+
+    }
+
+
     public function staff_expenses()
     {
         if (Auth::id()) {
@@ -223,17 +240,15 @@ class StaffController extends Controller
     {
         if (Auth::id()) {
             $userId = Auth::id();
-    
+
             // Fetch all staff expenses with related staff details
             $StaffExpenses = StaffExpense::where('admin_or_user_id', $userId)
                 ->with('staff') // Eager load related staff
                 ->get();
-    
+
             return view('admin_panel.staff_management.staff_expenses_record', compact('StaffExpenses'));
         } else {
             return redirect()->back();
         }
     }
-
-
 }

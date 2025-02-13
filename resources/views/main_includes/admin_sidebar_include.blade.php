@@ -24,8 +24,8 @@
                     <li><a href="{{ route('add-Order') }}">New Order</a></li>
                     <li><a href="{{ route('Orders') }}">Order</a></li>
                     <li><a href="{{ route('Orders-tracker') }}">Order Tracker</a></li>
-
-                    
+                    <li><a href="{{ route('Orders-asign') }}">Order Asign</a></li>
+                    <li><a href="{{ route('staff-order-asign') }}">Staff Asign Order</a></li>
                 </ul>
             </li>
 

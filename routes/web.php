@@ -63,6 +63,7 @@ Route::get('/add-staff', [StaffController::class, 'add_staff'])->middleware(['au
 Route::post('/store-staff', [StaffController::class, 'store_staff'])->name('store-staff');
 Route::get('/staffs', [StaffController::class, 'staffs'])->middleware(['auth','admin'])->name('staffs');
 Route::post('/staffs/update', [StaffController::class, 'update_staff'])->name('staffs.update');
+Route::post('/staffs/make-payment', [StaffController::class, 'makePayment'])->name('staffs.make_payment');
 
 Route::get('/staff-expenses', [StaffController::class, 'staff_expenses'])->name('staff.expenses.index');
 Route::post('/staff-expenses-store', [StaffController::class, 'store_expense'])->name('staff-expenses.store');
@@ -103,6 +104,15 @@ Route::post('/orders/{order}', [OrderManagementController::class, 'updateOrder']
 Route::get('/Orders-tracker', [OrderManagementController::class, 'Orders_tracker'])->name('Orders-tracker');
 Route::get('/Orders-tracker/view/{id}', [OrderManagementController::class, 'viewOrder'])->name('order.track.view');
 Route::post('/order/update-status', [OrderManagementController::class, 'orderupdateStatus'])->name('order.updateStatus');
+
+Route::get('/Orders-asign', [OrderManagementController::class, 'Orders_asign'])->name('Orders-asign');
+Route::get('/fetch-orders', [OrderManagementController::class, 'fetchOrders'])->name('fetch.orders');
+Route::get('/fetch-staff', [OrderManagementController::class, 'fetchStaff'])->name('fetch.staff');
+Route::post('/assign-orders', [OrderManagementController::class, 'assignOrders'])->name('assign.orders');
+
+Route::get('/staff-order-asign', [OrderManagementController::class, 'staff_order_asign'])->name('staff-order-asign');
+Route::get('/fetch-assigned-orders', [OrderManagementController::class, 'fetchAssignedOrders'])->name('fetch.assigned.orders');
+Route::post('/receive-orders', [OrderManagementController::class, 'receiveOrder'])->name('receive.orders');
 
 
 Route::get('/order-calender', [OrderManagementController::class, 'order_calender'])->name('order-calender');

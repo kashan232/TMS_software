@@ -94,6 +94,7 @@
                                             <th>Remaining</th>
                                             <th>Receiving Date</th>
                                             <th>Collection Date</th>
+                                            <th>Assigned To</th>
                                             <th>Status</th>
                                             <th>Action</th>
 
@@ -136,6 +137,7 @@
                                             <td>{{ $order->remaining }}</td>
                                             <td>{{ $order->order_receiving_date }}</td>
                                             <td>{{ $order->collection_date }}</td>
+                                            <td>{{ $order->assign_name }}</td>
                                             <td class="text-center">
                                                 @php
                                                 $statusColors = [
@@ -143,6 +145,8 @@
                                                 'Order Updated' => 'danger', // Red
                                                 'Ready' => 'warning', // Yellow
                                                 'Delivered' => 'success', // Green
+                                                'Assigned' => 'secondary', // Green
+                                                'Received from Staff' => 'info', // Green
                                                 ];
                                                 @endphp
 

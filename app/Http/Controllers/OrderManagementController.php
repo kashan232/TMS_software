@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Mail\OrderReadyMail;
 use App\Models\Customer;
 use App\Models\Order;
+use App\Models\OrderAssignment;
 use App\Models\OrderTracking;
+use App\Models\Staff;
+use App\Models\StaffDesignation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -101,11 +104,13 @@ class OrderManagementController extends Controller
             $Orders = Order::where('admin_or_user_id', $userId)
                 ->with('customer') // Ye customer data load karega
                 ->paginate(10);
+            $staffMembers = Staff::where('admin_or_user_id', $userId)->get(); // Adjust according to your database structure
 
             // dd($Orders); // Check karein ke email aa raha hai ya nahi
 
             return view('admin_panel.order.orders', [
                 'Orders' => $Orders,
+                'staffMembers' => $staffMembers,
             ]);
         } else {
             return redirect()->back();
@@ -297,5 +302,97 @@ class OrderManagementController extends Controller
 
         // Returning the orders grouped by day with customer number and status
         return response()->json($formattedOrders);
+    }
+
+    public function Orders_asign()
+    {
+        if (Auth::id()) {
+            $userId = Auth::id();
+            $customers = Customer::where('admin_or_user_id', $userId)->get();
+            $StaffDesignations = StaffDesignation::where('admin_or_user_id', $userId)->get();
+            return view('admin_panel.order.orders_asign', ['customers' => $customers, 'StaffDesignations' => $StaffDesignations]);
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function fetchOrders(Request $request)
+    {
+        $orders = Order::where('customer_number', $request->customer_number)->where('status', 'Order Received')->get();
+        return response()->json(['orders' => $orders]);
+    }
+
+    public function fetchStaff(Request $request)
+    {
+        $staff = Staff::where('designations', $request->designation)->get();
+        return response()->json(['staff' => $staff]);
+    }
+
+    public function assignOrders(Request $request)
+    {
+        $validated = $request->validate([
+            'customer_number' => 'required',
+            'order_id' => 'required',
+            'cloth_type' => 'required',
+            'staff_id' => 'required',
+        ]);
+
+        foreach ($validated['order_id'] as $index => $orderId) {
+            $order = Order::find($orderId);
+
+            if ($order) {
+                $staff = Staff::find($validated['staff_id'][$index]);
+
+                // Assign Order to Staff
+                OrderAssignment::create([
+                    'customer_number' => $validated['customer_number'],
+                    'order_id' => $orderId,
+                    'cloth_type' => $validated['cloth_type'][$index],
+                    'staff_id' => $validated['staff_id'][$index],
+                    'assigned_by' => auth()->id(),
+                ]);
+
+                // Update Order Status and Assigned Name
+                $order->update([
+                    'status' => 'Assigned',
+                    'assign_name' => $staff ? $staff->full_name : null,
+                ]);
+            }
+        }
+
+        return response()->json(['success' => true, 'message' => 'Orders assigned successfully!']);
+    }
+
+    public function staff_order_asign()
+    {
+        if (Auth::id()) {
+            $userId = Auth::id();
+            $StaffDesignations = StaffDesignation::where('admin_or_user_id', $userId)->get();
+            return view('admin_panel.order.staff_order_asign', ['StaffDesignations' => $StaffDesignations]);
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function fetchAssignedOrders(Request $request)
+    {
+        $orders = OrderAssignment::where('staff_id', $request->staff_id)
+            ->whereHas('order', function ($query) {
+                $query->where('status', 'Assigned'); // Filter orders with status "Assigned"
+            })
+            ->with(['order' => function ($query) {
+                $query->select('id','customer_number','cloth_type', 'price', 'quantity', 'item_total', 'status');
+            }])
+            ->get();
+        // dd($orders);
+        return response()->json(['orders' => $orders]);
+    }
+    // Update order status to "Received from Staff"
+    public function receiveOrder(Request $request)
+    {
+        foreach ($request->order_id as $orderId) {
+            Order::where('id', $orderId)->update(['status' => 'Received from Staff']);
+        }
+        return response()->json(['message' => 'Orders received successfully.']);
     }
 }

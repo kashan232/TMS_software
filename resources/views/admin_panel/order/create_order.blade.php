@@ -58,7 +58,7 @@
                                         <div class="col-md-4">
                                             <label for="customerNumber" class="form-label">Select Customer ID</label>
                                             <select name="customer_number" id="customerNumber" class="form-control" onchange="updateCustomerDetails(this)">
-                                                <option value="">Select Customer</option>
+                                                <option selected disabled>Please select</option>
                                                 @foreach ($customers as $customer)
                                                 <option value="{{ $customer->customer_number }}"
                                                     data-name="{{ $customer->full_name }}"
