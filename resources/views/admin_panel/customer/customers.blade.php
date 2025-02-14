@@ -23,6 +23,7 @@
                                     <thead>
                                         <tr>
                                             <th>S.No</th>
+                                            <th>Image</th>
                                             <th>Customer Number</th>
                                             <th>Full Name</th>
                                             <th>Email</th>
@@ -37,6 +38,13 @@
                                         @foreach($Customers as $Customer)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
+                                            <td>
+                                                @if($Customer->image)
+                                                <img src="{{ asset('TMS_software/public/customer_images/' . $Customer->image) }}" width="50" height="50" alt="Customer Image">
+                                                @else
+                                                <span>No Image</span>
+                                                @endif
+                                            </td>
                                             <td>#{{ $Customer->customer_number }}</td>
                                             <td>{{ $Customer->full_name }}</td>
                                             <td>{{ $Customer->email }}</td>
@@ -132,7 +140,7 @@
                                     <option value="kids">Kids</option>
                                 </select>
                             </div>
-                           
+
                         </div>
 
 

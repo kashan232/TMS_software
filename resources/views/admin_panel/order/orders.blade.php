@@ -2,27 +2,27 @@
 <div id="main-wrapper">
     @include('main_includes.navbar_include')
     @include('main_includes.admin_sidebar_include')
-<style>
-    .bottom--impo th {
-        padding-right: 28px !important;
-        font-size: 22px !important;
-        color: #000 !important;
-        text-align: center;
-      }
-    
-      .h-5 {
-        width: 30px;
-      }
-    
-      .leading-5 {
-        padding: 20px 0px;
-      }
-    
-      .leading-5 span:nth-child(3) {
-        color: red;
-        font-weight: 500;
-      }
-</style>
+    <style>
+        .bottom--impo th {
+            padding-right: 28px !important;
+            font-size: 22px !important;
+            color: #000 !important;
+            text-align: center;
+        }
+
+        .h-5 {
+            width: 30px;
+        }
+
+        .leading-5 {
+            padding: 20px 0px;
+        }
+
+        .leading-5 span:nth-child(3) {
+            color: red;
+            font-weight: 500;
+        }
+    </style>
     <div class="modal fade" id="paymentModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -82,6 +82,7 @@
                                     <thead>
                                         <tr>
                                             <th>Sno</th>
+                                            <th>Customer Image</th>
                                             <th>Customer Id</th>
                                             <th>Description</th>
                                             <th>Cloth Type</th>
@@ -104,6 +105,13 @@
                                         @foreach ($Orders as $order)
                                         <tr>
                                             <td>{{ $order->id }}</td>
+                                            <td>
+                                                @if($order->customer->image)
+                                                <img src="{{ asset('TMS_software/public/customer_images/' . $order->customer->image) }}" width="50" height="50" alt="Customer Image">
+                                                @else
+                                                <span>No Image</span>
+                                                @endif
+                                            </td>
                                             <td>#{{ $order->customer_number }} <br> {{ $order->customer->full_name }} <br> {{ $order->customer->email }}</td>
                                             <td>{{ $order->order_description }}</td>
                                             <td>
@@ -160,7 +168,7 @@
                                                     <!-- Payment Button -->
                                                     <a class="btn btn-success btn-xs d-flex align-items-center gap-1 open-payment-modal"
                                                         data-id="{{ $order->id }}"
-                                                        
+
                                                         data-customer="{{ $order->customer_number }}"
                                                         data-remaining="{{ $order->remaining }}"
                                                         data-bs-toggle="tooltip"
@@ -267,7 +275,7 @@
             let orderId = $(this).data('id');
             let customerNumber = $(this).data('customer');
             let remaining = $(this).data('remaining');
-            
+
             $('#order_id').val(orderId);
             $('#customer_number').val(customerNumber);
             $('#remaining_amount').val(remaining);
@@ -276,7 +284,7 @@
             $('#paymentModal').modal('show');
         });
 
-      
+
 
         // Calculate Remaining Amount Live
         $('#pay_amount').on('input', function() {

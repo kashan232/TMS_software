@@ -15,13 +15,17 @@
                         <div class="card-body">
                             <div class="basic-form">
                                 @if (session()->has('success'))
-                                    <div class="alert alert-success">
-                                        <strong>Success!</strong> {{ session('success') }}.
-                                    </div>
+                                <div class="alert alert-success">
+                                    <strong>Success!</strong> {{ session('success') }}.
+                                </div>
                                 @endif
                                 <form action="{{ route('customers.store') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="customer_image">Customer Image</label>
+                                            <input type="file" class="form-control" name="customer_image" required>
+                                        </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="customer_number">Customer Number</label>

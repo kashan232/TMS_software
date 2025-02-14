@@ -34,10 +34,22 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
-
         if (Auth::id()) {
             $userId = Auth::id();
 
+            // Image upload logic
+
+            $imagePath = null;
+
+            if ($request->hasFile('customer_image')) {
+                $image = $request->file('customer_image');
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $imagePath = 'customer_images/' . $imageName;
+
+                // Image ko public folder me move karna
+                $image->move(public_path('customer_images'), $imageName);
+            }
+            // Customer record create karna
             Customer::create([
                 'admin_or_user_id' => $userId,
                 'customer_number' => $request->customer_number,
@@ -47,6 +59,7 @@ class CustomerController extends Controller
                 'phone_number' => $request->phone_number,
                 'city' => $request->city,
                 'gender' => $request->gender,
+                'image' => $imageName, // Save image path in DB
             ]);
 
             return redirect()->back()->with('success', 'Customer added successfully!');
@@ -54,6 +67,7 @@ class CustomerController extends Controller
             return redirect()->back();
         }
     }
+
 
     public function Customers()
     {

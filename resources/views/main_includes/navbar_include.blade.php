@@ -30,7 +30,7 @@
 					</li>
 					<li class="nav-item dropdown header-profile">
 						<a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
-							<img src="/TMS_software/public/images/profile/profile.png" width="20" alt="">
+							<img src="/TMS_software/public/images/profile/profile.jpeg" width="20" alt="">
 
 						</a>
 						<div class="dropdown-menu dropdown-menu-end">
