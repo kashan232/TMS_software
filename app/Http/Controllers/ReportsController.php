@@ -8,6 +8,7 @@ use App\Models\Staff;
 use App\Models\StaffExpense;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ReportsController extends Controller
 {
@@ -111,5 +112,49 @@ class ReportsController extends Controller
     {
         $customer = Customer::where('customer_number', $request->customer_number)->first();
         return response()->json($customer);
+    }
+
+    public function order_report()
+    {
+        if (Auth::id()) {
+            $userId = Auth::id();
+
+            return view('admin_panel.reports.order_report');
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function fetchOrderReport(Request $request)
+    {
+        $startDate = $request->week_start_date;
+        $endDate = $request->week_end_date;
+
+        $orders = Order::with('customer') // Ensure 'customer' relationship exists
+        ->whereBetween('order_receiving_date', [$startDate, $endDate])
+        ->get();
+        $totalOrders = $orders->count();
+        $delivered = $orders->where('status', 'Delivered')->count();
+        $ready = $orders->where('status', 'Ready')->count();
+        $assigned = $orders->whereNotNull('assign_name')->count();
+        $received = $orders->where('status', 'Received')->count();
+
+        $totalAmount = $orders->sum('net_total');
+        $totalPaid = $orders->sum('advance_paid');
+        $totalRemaining = $orders->sum('remaining');
+
+        return response()->json([
+            'orders' => $orders,
+            'summary' => [
+                'totalOrders' => $totalOrders,
+                'delivered' => $delivered,
+                'ready' => $ready,
+                'assigned' => $assigned,
+                'received' => $received,
+                'totalAmount' => $totalAmount,
+                'totalPaid' => $totalPaid,
+                'totalRemaining' => $totalRemaining,
+            ]
+        ]);
     }
 }

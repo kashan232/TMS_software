@@ -95,6 +95,7 @@
                 <ul aria-expanded="false">
                 <li><a href="{{ route('reports-staff-expense') }}">Staff Expenses Record</a></li>
                 <li><a href="{{ route('reports-customer-wise') }}">Customer Record</a></li>
+                <li><a href="{{ route('order-report') }}">Order Record</a></li>
                 </ul>
             </li>
         </ul>

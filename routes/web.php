@@ -122,11 +122,11 @@ Route::get('/get_orders', [OrderManagementController::class, 'getOrders'])->name
 
 Route::get('/reports-staff-expense', [ReportsController::class, 'reports_staff_expense'])->name('reports-staff-expense');
 Route::get('/fetch-staff-expenses', [ReportsController::class, 'fetch_staff_expenses'])->name('fetch-staff-expenses');
-
 Route::get('/reports-customer-wise', [ReportsController::class, 'reports_customer_wise'])->name('reports-customer-wise');
 Route::get('/fetch-customer-report', [ReportsController::class, 'fetchCustomerReport'])->name('fetch-customer-report');
-
 Route::get('/get-customer-details', [ReportsController::class, 'get_customer_details'])->name('get-customer-details');
+Route::get('/order-report', [ReportsController::class, 'order_report'])->name('order-report');
+Route::get('/fetch-order-report', [ReportsController::class, 'fetchOrderReport'])->name('fetch-order-report');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
