@@ -19,7 +19,7 @@
                             </div>
                             @endif
                             <div class="table-responsive ticket-table">
-                                <table id="example" class="display dataTablesCard table-responsive-xl dataTable no-footer" style="min-width: 845px">
+                                <table id="example" class="display dataTablesCard table-responsive-xl  no-footer" style="min-width: 845px">
                                     <thead>
                                         <tr>
                                             <th>S.No</th>

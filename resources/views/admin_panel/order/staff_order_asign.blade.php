@@ -40,6 +40,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Select</th>
+                                                        <th>Asign Date</th>
                                                         <th>Customer Number</th>
                                                         <th>Order ID</th>
                                                         <th>Cloth Type</th>
@@ -112,6 +113,7 @@
 
                                 let row = `<tr>
                             <td><input type="checkbox" name="order_id[]" value="${order.id}"></td>
+                            <td>${assignment.asign_date || 'N/A'}</td>
                             <td>#${order.customer_number}</td>
                             <td>${order.id}</td>
                             <td>${clothType}</td>

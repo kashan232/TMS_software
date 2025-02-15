@@ -35,12 +35,19 @@
                                             @endforeach
                                         </select>
                                     </div>
+
+                                    <div class="mb-3 col-md-6">
+                                        <label for="asign_date">Assign Date</label>
+                                        <input type="date" name="asign_date" class="form-control" id="asign_date">
+                                    </div>
+
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <form id="assignOrderForm" method="POST">
                                             @csrf
                                             <input type="hidden" name="customer_number" id="selected_customer">
+                                            <input type="hidden" name="hidden_asign_date" id="hidden_asign_date">
                                             <table class="table table-bordered" id="order_table">
                                                 <thead>
                                                     <tr>
@@ -75,15 +82,32 @@
 <script>
     $(document).ready(function() {
         // Fetch orders on customer change
+        function updateHiddenAssignDate() {
+            var asignDate = $('#asign_date').val();
+            $('#hidden_asign_date').val(asignDate);
+        }
+
+        // Jab bhi assign_date change ho to hidden field update ho
+        $('#asign_date').on('change', function() {
+            updateHiddenAssignDate();
+        });
+
+        $('#assignOrderForm').on('submit', function(e) {
+            updateHiddenAssignDate();
+        });
+
         $('#customer_number').on('change', function() {
             var customerNumber = $(this).val();
+            var asignDate = $('#asign_date').val();
             $('#selected_customer').val(customerNumber);
+            $('#hidden_asign_date').val(asignDate);
             if (customerNumber) {
                 $.ajax({
                     url: "{{ route('fetch.orders') }}",
                     type: "GET",
                     data: {
-                        customer_number: customerNumber
+                        customer_number: customerNumber,
+                        asignDate: asignDate
                     },
                     success: function(response) {
                         $('#order_table tbody').empty();
@@ -101,7 +125,7 @@
                                     <td>${prices[i]}</td>
                                     <td>${quantities[i]}</td>
                                     <td>${itemTotals[i]}</td>
-                                    <td class="btn btn-primary bg-primary text-white btn-sm">${order.status}</td>
+                                    <td class="btn btn-primary bg-primary mt-2 text-white btn-sm">${order.status}</td>
                                     <td>
                                         <select name="staff_id[]" class="form-control staff_assignment">
                                             <option>Select Staff</option>

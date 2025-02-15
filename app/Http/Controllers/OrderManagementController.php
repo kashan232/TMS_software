@@ -332,6 +332,7 @@ class OrderManagementController extends Controller
     {
         $validated = $request->validate([
             'customer_number' => 'required',
+            'hidden_asign_date' => 'required',
             'order_id' => 'required',
             'cloth_type' => 'required',
             'staff_id' => 'required',
@@ -346,6 +347,7 @@ class OrderManagementController extends Controller
                 // Assign Order to Staff
                 OrderAssignment::create([
                     'customer_number' => $validated['customer_number'],
+                    'asign_date' => $validated['hidden_asign_date'],
                     'order_id' => $orderId,
                     'cloth_type' => $validated['cloth_type'][$index],
                     'staff_id' => $validated['staff_id'][$index],
@@ -381,10 +383,11 @@ class OrderManagementController extends Controller
                 $query->where('status', 'Assigned'); // Filter orders with status "Assigned"
             })
             ->with(['order' => function ($query) {
-                $query->select('id','customer_number','cloth_type', 'price', 'quantity', 'item_total', 'status');
+                $query->select('id', 'customer_number', 'cloth_type', 'price', 'quantity', 'item_total', 'status');
             }])
+            ->select('id', 'order_id', 'staff_id', 'asign_date') // 👈 Assign Date ko select karna zaroori hai
             ->get();
-        // dd($orders);
+
         return response()->json(['orders' => $orders]);
     }
     // Update order status to "Received from Staff"

@@ -93,7 +93,8 @@
                     <span class="nav-text">Reports</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="{{ route('reports-staff-expense') }}">Staff Expenses Record</a></li>
+                <li><a href="{{ route('reports-staff-expense') }}">Staff Expenses Record</a></li>
+                <li><a href="{{ route('reports-customer-wise') }}">Customer Record</a></li>
                 </ul>
             </li>
         </ul>
