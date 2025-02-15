@@ -207,7 +207,7 @@ class OrderManagementController extends Controller
         if (Auth::id()) {
             $userId = Auth::id();
 
-            $Orders = Order::where('admin_or_user_id', $userId)->get(); // Adjust according to your database structure
+            $Orders = Order::where('admin_or_user_id', $userId)->paginate(10); // Adjust according to your database structure
             // dd($Orders);
             return view('admin_panel.order.orders_tracker', [
                 'Orders' => $Orders,

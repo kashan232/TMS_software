@@ -53,7 +53,7 @@ class MeasurementPartController extends Controller
         if (Auth::id()) {
             $userId = Auth::id();
 
-            $MeasurementPart = MeasurementPart::where('admin_or_user_id', $userId)->get(); // Adjust according to your database structure
+            $MeasurementPart = MeasurementPart::where('admin_or_user_id', $userId)->paginate(10); // Adjust according to your database structure
             return view('admin_panel.measurement_parts.view-measurement-parts', [
                 'MeasurementPart' => $MeasurementPart,
             ]);

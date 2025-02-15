@@ -24,7 +24,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label for="customer_image">Customer Image</label>
-                                            <input type="file" class="form-control" name="customer_image" required>
+                                            <input type="file" class="form-control" name="customer_image">
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">

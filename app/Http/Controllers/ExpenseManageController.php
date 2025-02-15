@@ -46,7 +46,7 @@ class ExpenseManageController extends Controller
         if (Auth::id()) {
             $userId = Auth::id();
 
-            $view_expenses = Expense::where('admin_or_user_id', $userId)->get(); // Adjust according to your database structure
+            $view_expenses = Expense::where('admin_or_user_id', $userId)->paginate(10); // Adjust according to your database structure
 
             return view('admin_panel.Expense_management.view_expense', [
                 'view_expenses' => $view_expenses,
@@ -158,7 +158,7 @@ class ExpenseManageController extends Controller
             $userId = Auth::id();
             $view_expenses = AddExpenses::where('admin_or_user_id', $userId)
                 ->with('category') // Category relation load karein
-                ->get();
+                ->paginate(10);
             $categories = Expense::where('admin_or_user_id', $userId)->get(); // Fetch category_name and id
             // dd($categories);
 

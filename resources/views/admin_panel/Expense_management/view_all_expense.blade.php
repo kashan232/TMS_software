@@ -1,6 +1,26 @@
 @include('main_includes.header_include')
 <div id="main-wrapper">
+    <style>
+        .bottom--impo th {
+            padding-right: 28px !important;
+            font-size: 22px !important;
+            color: #000 !important;
+            text-align: center;
+        }
 
+        .h-5 {
+            width: 30px;
+        }
+
+        .leading-5 {
+            padding: 20px 0px;
+        }
+
+        .leading-5 span:nth-child(3) {
+            color: red;
+            font-weight: 500;
+        }
+    </style>
     @include('main_includes.navbar_include')
 
     @include('main_includes.admin_sidebar_include')
@@ -25,7 +45,7 @@
                             @endif
                             <div class="table-responsive ticket-table">
                                 <div id="example_wrapper" class="dataTables_wrapper no-footer">
-                                    <table class="table  table-bordered  text-center">
+                                    <table id="example" class="display dataTablesCard table-responsive-xl" style="min-width: 845px">
                                         <thead class="table-info text-light py-3">
                                             <th>#</th>
                                             <th>Category</th>
@@ -66,7 +86,9 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-
+                                    <div class="py-5">
+                                        {{ $view_expenses->appends(request()->input())->links() }}
+                                    </div>
                                 </div>
                             </div>
                         </div>

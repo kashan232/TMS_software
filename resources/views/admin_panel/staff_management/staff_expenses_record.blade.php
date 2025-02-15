@@ -4,7 +4,27 @@
         Main wrapper start
     ***********************************-->
 <div id="main-wrapper">
+    <style>
+        .bottom--impo th {
+            padding-right: 28px !important;
+            font-size: 22px !important;
+            color: #000 !important;
+            text-align: center;
+        }
 
+        .h-5 {
+            width: 30px;
+        }
+
+        .leading-5 {
+            padding: 20px 0px;
+        }
+
+        .leading-5 span:nth-child(3) {
+            color: red;
+            font-weight: 500;
+        }
+    </style>
     <!--**********************************
             Nav header start
         ***********************************-->
@@ -34,7 +54,6 @@
                             @endif
                             <div class="table-responsive ticket-table">
                                 <div id="example_wrapper" class="dataTables_wrapper no-footer">
-                                    <!-- <table id="example" class="display dataTablesCard table-responsive-xl dataTable no-footer" style="min-width: 845px" aria-describedby="example_info"> -->
                                     <table id="example" class="display dataTablesCard table-responsive-xl" style="min-width: 845px">
                                         <thead>
                                             <tr>
@@ -71,7 +90,9 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-
+                                    <div class="py-5">
+                                        {{ $StaffExpenses->appends(request()->input())->links() }}
+                                    </div>
                                 </div>
                             </div>
                         </div>

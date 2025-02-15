@@ -1,6 +1,26 @@
 @include('main_includes.header_include')
 <div id="main-wrapper">
+    <style>
+        .bottom--impo th {
+            padding-right: 28px !important;
+            font-size: 22px !important;
+            color: #000 !important;
+            text-align: center;
+        }
 
+        .h-5 {
+            width: 30px;
+        }
+
+        .leading-5 {
+            padding: 20px 0px;
+        }
+
+        .leading-5 span:nth-child(3) {
+            color: red;
+            font-weight: 500;
+        }
+    </style>
     @include('main_includes.navbar_include')
 
     @include('main_includes.admin_sidebar_include')
@@ -44,13 +64,16 @@
                                                     <div class="d-flex">
                                                         <a href="javascript:void(0);" class="btn btn-primary edit-btn shadow btn-sm sharp me-1">
                                                             <i class="fas fa-pencil-alt"></i>
-                                                        </a>    
+                                                        </a>
                                                     </div>
                                                 </td>
                                             </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
+                                    <div class="py-5">
+                                        {{ $MeasurementPart->appends(request()->input())->links() }}
+                                    </div>
                                 </div>
                             </div>
                         </div>

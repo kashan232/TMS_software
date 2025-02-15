@@ -2,7 +2,27 @@
 <div id="main-wrapper">
     @include('main_includes.navbar_include')
     @include('main_includes.admin_sidebar_include')
+    <style>
+        .bottom--impo th {
+            padding-right: 28px !important;
+            font-size: 22px !important;
+            color: #000 !important;
+            text-align: center;
+        }
 
+        .h-5 {
+            width: 30px;
+        }
+
+        .leading-5 {
+            padding: 20px 0px;
+        }
+
+        .leading-5 span:nth-child(3) {
+            color: red;
+            font-weight: 500;
+        }
+    </style>
     <div class="content-body rightside-event">
         <div class="container-fluid">
             <div class="row">
@@ -69,6 +89,9 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                <div class="py-5">
+                                    {{ $Orders->appends(request()->input())->links() }}
+                                </div>
                             </div>
                         </div>
                     </div>
