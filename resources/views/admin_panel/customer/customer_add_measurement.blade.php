@@ -3,7 +3,13 @@
 <div id="main-wrapper">
     @include('main_includes.navbar_include')
     @include('main_includes.admin_sidebar_include')
-
+    <style>
+        .form-label {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
     <div class="content-body rightside-event">
         <div class="container-fluid">
             <div class="row">

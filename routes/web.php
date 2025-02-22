@@ -41,12 +41,14 @@ Route::post('/cloth-type/update', [ClothTypeController::class, 'update'])->name(
 Route::get('/cloth-Variants', [ClothTypeController::class, 'cloth_Variants'])->middleware(['auth','admin'])->name('cloth-Variants');
 Route::post('/store-cloth-Variants', [ClothTypeController::class, 'store_cloth_Variants'])->name('store-cloth-Variants');
 Route::post('/cloth-Variants/update', [ClothTypeController::class, 'update'])->name('cloth_Variants.update');
+Route::post('/delete-Variants', [ClothTypeController::class, 'delete_Variants'])->name('delete-Variants');
 
 
 // measurment
 Route::get('/create-measurement-parts', [MeasurementPartController::class, 'create_measurement_parts'])->middleware(['auth','admin'])->name('create-measurement-parts');
 Route::post('/measurment_store', [MeasurementPartController::class, 'measurment_store'])->name('measurment_store');
 Route::get('/view-measurement-parts', [MeasurementPartController::class, 'view_measurement_parts'])->middleware(['auth','admin'])->name('view-measurement-parts');
+Route::post('/delete-measurement-parts', [MeasurementPartController::class, 'delete_measurement_parts'])->name('delete-measurement-parts');
 
 
 //cloth-type
@@ -104,6 +106,7 @@ Route::post('/orders/{order}', [OrderManagementController::class, 'updateOrder']
 Route::get('/Orders-tracker', [OrderManagementController::class, 'Orders_tracker'])->name('Orders-tracker');
 Route::get('/Orders-tracker/view/{id}', [OrderManagementController::class, 'viewOrder'])->name('order.track.view');
 Route::post('/order/update-status', [OrderManagementController::class, 'orderupdateStatus'])->name('order.updateStatus');
+Route::post('/delete-order', [OrderManagementController::class, 'delete_order'])->name('delete-order');
 
 Route::get('/Orders-asign', [OrderManagementController::class, 'Orders_asign'])->name('Orders-asign');
 Route::get('/fetch-orders', [OrderManagementController::class, 'fetchOrders'])->name('fetch.orders');

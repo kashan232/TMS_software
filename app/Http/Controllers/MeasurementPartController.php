@@ -61,4 +61,20 @@ class MeasurementPartController extends Controller
             return redirect()->back();
         }
     }
+
+    public function delete_measurement_parts(Request $request)
+    {
+        if (Auth::id()) {
+            $MeasurementPart = MeasurementPart::find($request->id);
+
+            if ($MeasurementPart) {
+                $MeasurementPart->delete();
+                return response()->json(['success' => true, 'message' => 'Measurement Part deleted successfully.']);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Measurement Part not found.']);
+            }
+        }
+        return response()->json(['success' => false, 'message' => 'Unauthorized request.']);
+    }
+    
 }

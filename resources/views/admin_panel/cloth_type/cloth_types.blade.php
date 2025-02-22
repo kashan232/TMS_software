@@ -128,7 +128,7 @@
                                                 <th>SNo</th>
                                                 <th>Name</th>
                                                 <th>Gender</th>
-                                                <th>Action</th>
+                                                <!-- <th>Action</th> -->
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -137,15 +137,15 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $type->cloth_type_name }}</td>
                                                 <td>{{ $type->cloth_type_gender }}</td>
-                                                <td>
-                                                    <div class="d-flex">
-                                                        <a href="javascript:void(0);" class="btn btn-primary edit-btn shadow btn-sm sharp me-1"
+                                                <!-- <td>
+                                                    <div class="d-flex"> 
+                                                        <a href="javascript:void(0);" type="button"   class="btn btn-primary edit-btn shadow btn-sm sharp me-1"
                                                             data-type-id="{{ $type->id }}" data-type-name="{{ $type->cloth_type_name }}"
                                                             data-type-gender="{{ $type->cloth_type_gender }}">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </a>
                                                     </div>
-                                                </td>
+                                                </td> -->
                                             </tr>
                                             @endforeach
                                         </tbody>

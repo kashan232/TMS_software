@@ -318,7 +318,10 @@ class OrderManagementController extends Controller
 
     public function fetchOrders(Request $request)
     {
-        $orders = Order::where('customer_number', $request->customer_number)->where('status', 'Order Received')->get();
+        // $orders = Order::where('customer_number', $request->customer_number)->where('status', 'Order Received')->get();
+        $orders = Order::where('customer_number', $request->customer_number)
+            ->whereIn('status', ['Order Received', 'Order Updated'])
+            ->get();
         return response()->json(['orders' => $orders]);
     }
 
@@ -397,5 +400,20 @@ class OrderManagementController extends Controller
             Order::where('id', $orderId)->update(['status' => 'Received from Staff']);
         }
         return response()->json(['message' => 'Orders received successfully.']);
+    }
+
+    public function delete_order(Request $request)
+    {
+        if (Auth::id()) {
+            $Order = Order::find($request->id);
+
+            if ($Order) {
+                $Order->delete();
+                return response()->json(['success' => true, 'message' => 'Order deleted successfully.']);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Order not found.']);
+            }
+        }
+        return response()->json(['success' => false, 'message' => 'Unauthorized request.']);
     }
 }

@@ -84,7 +84,7 @@
                                             <th>Sno</th>
                                             <th>Customer Image</th>
                                             <th>Customer Id</th>
-                                            <th>Description</th>
+                                            <th>Description | Received By</th>
                                             <th>Cloth Type</th>
                                             <th>Price</th>
                                             <th>Quantity</th>
@@ -113,7 +113,7 @@
                                                 @endif
                                             </td>
                                             <td>#{{ $order->customer_number }} <br> {{ $order->customer->full_name }} <br> {{ $order->customer->email }}</td>
-                                            <td>{{ $order->order_description }}</td>
+                                            <td>{{ $order->order_description }} <br>{{ $order->order_received_by }}</td>
                                             <td>
                                                 @php
                                                 $clothTypes = json_decode($order->cloth_type, true);
@@ -206,6 +206,10 @@
                                                         title="Order Status">
                                                         <i class="fas fa-tasks"></i>
                                                     </button>
+
+                                                    <button class="btn btn-danger delete-measuremt"
+                                                        data-id="{{ $order->id }}"><i class="fas fa-trash"></i></button>
+
                                                 </div>
                                             </td>
 
@@ -259,6 +263,58 @@
     @include('main_includes.footer_include')
 
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll('.delete-measuremt').forEach(button => {
+                button.addEventListener('click', function() {
+                    let measuremtId = this.getAttribute('data-id');
+
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "Do you really want to delete this Order?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#d33",
+                        cancelButtonColor: "#3085d6",
+                        confirmButtonText: "Yes, delete it!",
+                        cancelButtonText: "No, cancel!"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            fetch("{{ route('delete-order') }}", {
+                                    method: "POST",
+                                    headers: {
+                                        "X-CSRF-TOKEN": document.querySelector(
+                                            'meta[name="csrf-token"]').getAttribute(
+                                            'content'),
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify({
+                                        id: measuremtId
+                                    })
+                                }).then(response => response.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        Swal.fire("Deleted!",
+                                                "The Order has been deleted.",
+                                                "success")
+                                            .then(() => location.reload());
+                                    } else {
+                                        Swal.fire("Error!", data.message, "error");
+                                    }
+                                }).catch(error => {
+                                    console.error("Error:", error);
+                                    Swal.fire("Error!", "Something went wrong.",
+                                        "error");
+                                });
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {

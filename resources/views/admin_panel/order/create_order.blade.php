@@ -86,7 +86,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label for="orderReceiver" class="form-label">Order Received By</label>
-                                            <input type="text" name="order_received_by" id="orderReceiver" class="form-control" value="{{ Auth::user()->name }}" readonly>
+                                            <input type="text" name="order_received_by" id="orderReceiver" class="form-control">
                                         </div>
                                     </div>
                                     <div class="row mb-4">

@@ -58,6 +58,8 @@ class ClothTypeController extends Controller
         return redirect()->back()->with('success', 'Cloth Type updated successfully');
     }
 
+   
+
     public function cloth_Variants()
     {
         if (Auth::id()) {
@@ -98,4 +100,19 @@ class ClothTypeController extends Controller
         return redirect()->back()->with('success', 'variants Added Successfully');
     }
 
+    public function delete_Variants(Request $request)
+    {
+        if (Auth::id()) {
+            $ClothVariant = ClothVariant::find($request->id);
+
+            if ($ClothVariant) {
+                $ClothVariant->delete();
+                return response()->json(['success' => true, 'message' => 'Cloth Variant deleted successfully.']);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Cloth Variant not found.']);
+            }
+        }
+        return response()->json(['success' => false, 'message' => 'Unauthorized request.']);
+    }
+    
 }

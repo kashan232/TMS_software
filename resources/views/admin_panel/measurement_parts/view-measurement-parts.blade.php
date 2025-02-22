@@ -61,11 +61,8 @@
                                                 <td>{{ $type->Measurement_category }}</td>
                                                 <td>{{ $type->Measurement_name }}</td>
                                                 <td>
-                                                    <div class="d-flex">
-                                                        <a href="javascript:void(0);" class="btn btn-primary edit-btn shadow btn-sm sharp me-1">
-                                                            <i class="fas fa-pencil-alt"></i>
-                                                        </a>
-                                                    </div>
+                                                    <button class="btn btn-danger delete-measuremt"
+                                                    data-id="{{ $type->id }}"><i class="fas fa-trash"></i></button>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -87,3 +84,55 @@
 
 
     @include('main_includes.footer_include')
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll('.delete-measuremt').forEach(button => {
+                button.addEventListener('click', function() {
+                    let measuremtId = this.getAttribute('data-id');
+
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "Do you really want to delete this Measurement Parts?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#d33",
+                        cancelButtonColor: "#3085d6",
+                        confirmButtonText: "Yes, delete it!",
+                        cancelButtonText: "No, cancel!"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            fetch("{{ route('delete-measurement-parts') }}", {
+                                    method: "POST",
+                                    headers: {
+                                        "X-CSRF-TOKEN": document.querySelector(
+                                            'meta[name="csrf-token"]').getAttribute(
+                                            'content'),
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify({
+                                        id: measuremtId
+                                    })
+                                }).then(response => response.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        Swal.fire("Deleted!",
+                                                "The Measurement Parts has been deleted.",
+                                                "success")
+                                            .then(() => location.reload());
+                                    } else {
+                                        Swal.fire("Error!", data.message, "error");
+                                    }
+                                }).catch(error => {
+                                    console.error("Error:", error);
+                                    Swal.fire("Error!", "Something went wrong.",
+                                        "error");
+                                });
+                        }
+                    });
+                });
+            });
+        });
+    </script>

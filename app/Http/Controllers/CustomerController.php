@@ -99,9 +99,10 @@ class CustomerController extends Controller
                 $customer->email = $request->email;
                 $customer->address = $request->address;
                 $customer->phone_number = $request->phone_number;
+                $customer->city = $request->city;
                 $customer->gender = $request->gender;
                 $customer->save();
-
+                
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Customer updated successfully.',
