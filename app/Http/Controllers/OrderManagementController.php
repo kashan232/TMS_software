@@ -241,10 +241,10 @@ class OrderManagementController extends Controller
         $order->delivery_description = $request->description;
         $order->save();
 
-        // Agar order "Ready" ho gaya to customer ko email bhejo
-        if ($order->status == "Ready" && $order->customer) {
-            Mail::to($order->customer->email)->send(new OrderReadyMail($order));
-        }
+        // // Agar order "Ready" ho gaya to customer ko email bhejo
+        // if ($order->status == "Ready" && $order->customer) {
+        //     Mail::to($order->customer->email)->send(new OrderReadyMail($order));
+        // }
 
         return response()->json(['success' => true]);
     }
