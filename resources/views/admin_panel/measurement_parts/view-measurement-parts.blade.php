@@ -68,9 +68,7 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    <div class="py-5">
-                                        {{ $MeasurementPart->appends(request()->input())->links() }}
-                                    </div>
+                                   
                                 </div>
                             </div>
                         </div>

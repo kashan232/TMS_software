@@ -157,9 +157,6 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    <div class="py-5">
-                                        {{ $PriceList->appends(request()->input())->links() }}
-                                    </div>
                                 </div>
                             </div>
                         </div>

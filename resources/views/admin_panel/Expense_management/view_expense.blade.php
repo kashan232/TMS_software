@@ -74,9 +74,6 @@
 
                                         </tbody>
                                     </table>
-                                    <div class="py-5">
-                                        {{ $view_expenses->appends(request()->input())->links() }}
-                                    </div>
                                 </div>
                             </div>
 

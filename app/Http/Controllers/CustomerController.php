@@ -76,7 +76,7 @@ class CustomerController extends Controller
         if (Auth::id()) {
             $userId = Auth::id();
 
-            $Customers = Customer::where('admin_or_user_id', $userId)->paginate(10); // Adjust according to your database structure
+            $Customers = Customer::where('admin_or_user_id', $userId)->paginate(5000); // Adjust according to your database structure
 
             return view('admin_panel.customer.customers', [
                 'Customers' => $Customers,

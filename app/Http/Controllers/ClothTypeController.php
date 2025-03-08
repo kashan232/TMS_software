@@ -15,7 +15,7 @@ class ClothTypeController extends Controller
         if (Auth::id()) {
             $userId = Auth::id();
 
-            $ClothTypes = ClothType::where('admin_or_user_id', $userId)->paginate(10); // Adjust according to your database structure
+            $ClothTypes = ClothType::where('admin_or_user_id', $userId)->get(); // Adjust according to your database structure
 
             return view('admin_panel.cloth_type.cloth_types', [
                 'ClothTypes' => $ClothTypes,
@@ -66,7 +66,7 @@ class ClothTypeController extends Controller
             $userId = Auth::id();
 
             $ClothTypes = ClothType::where('admin_or_user_id', $userId)->get(); // Adjust according to your database structure
-            $ClothVariants = ClothVariant::where('admin_or_user_id', $userId)->paginate(10); // Adjust according to your database structure
+            $ClothVariants = ClothVariant::where('admin_or_user_id', $userId)->get(); // Adjust according to your database structure
 
             return view('admin_panel.cloth_type.cloth_variants', [
                 'ClothTypes' => $ClothTypes,

@@ -150,11 +150,6 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-
-                                    <div class="py-5">
-                                        {{ $ClothTypes->appends(request()->input())->links() }}
-                                    </div>
-
                                 </div>
                             </div>
                         </div>

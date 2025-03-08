@@ -21,17 +21,17 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/TMS_software/public/images/favicon.png">
     <!-- <link href="/TMS_software/public/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet"> -->
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="/TMS_software/public/offlinelinks/jquery.dataTables.min.css">
+	<link rel="stylesheet" type="text/css" href="/TMS_software/public/offlinelinks/buttons.dataTables.min.css">
     
     <link rel="stylesheet" href="/TMS_software/public/vendor/chartist/css/chartist.min.css">
     <link href="/TMS_software/public/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
     <link href="/TMS_software/public/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <link class="main-css" href="/TMS_software/public/css/style.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/TMS_software/public/offlinelinks/all.min.css">
     <!-- Include Select2 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/TMS_software/public/offlinelinks/select2.min.css" rel="stylesheet" />
+    <link href="/TMS_software/public/offlinelinks/bootstrap.min.css" rel="stylesheet">
 
 
 </head>

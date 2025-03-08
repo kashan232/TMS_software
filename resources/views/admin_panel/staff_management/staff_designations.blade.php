@@ -128,9 +128,6 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    <div class="py-5">
-                                        {{ $StaffDesignations->appends(request()->input())->links() }}
-                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -52,6 +52,7 @@
                                 <strong>Success!</strong> {{ session('success') }}.
                             </div>
                             @endif
+                            <button id="export-pdf" class="btn btn-danger mb-3">Export PDF</button>
                             <div class="table-responsive ticket-table">
                                 <div id="example_wrapper" class="dataTables_wrapper no-footer">
                                     <table id="example" class="display dataTablesCard table-responsive-xl" style="min-width: 845px">
@@ -90,9 +91,6 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    <div class="py-5">
-                                        {{ $StaffExpenses->appends(request()->input())->links() }}
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -106,3 +104,48 @@
 
 
     @include('main_includes.footer_include')
+    <script>
+        document.getElementById('export-pdf').addEventListener('click', function() {
+        const {
+            jsPDF
+        } = window.jspdf;
+        const doc = new jsPDF();
+
+        doc.text("Expense Record", 14, 10); // PDF Title
+
+        doc.autoTable({
+            html: '#example', // Table ID
+            startY: 20,
+            styles: {
+                fontSize: 8
+            }, // Adjust Font Size
+            headStyles: {
+                fillColor: [211, 47, 47]
+            }, // Red Header
+            columnStyles: {
+                1: {
+                    cellWidth: 25
+                } // Adjust Image Column Width
+            },
+            didDrawCell: function(data) {
+                // Convert Image URLs to Base64 for PDF
+                if (data.column.index === 1 && data.cell.raw.querySelector('img')) {
+                    const imgElement = data.cell.raw.querySelector('img');
+                    const canvas = document.createElement("canvas");
+                    const ctx = canvas.getContext("2d");
+                    const img = new Image();
+                    img.src = imgElement.src;
+                    img.onload = function() {
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        ctx.drawImage(img, 0, 0);
+                        const imgData = canvas.toDataURL("image/jpeg");
+                        doc.addImage(imgData, "JPEG", data.cell.x + 2, data.cell.y + 2, 15, 15);
+                    };
+                }
+            }
+        });
+
+        doc.save('Expense_Record.pdf');
+    });
+    </script>

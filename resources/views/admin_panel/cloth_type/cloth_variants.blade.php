@@ -119,9 +119,6 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    <div class="py-5">
-                                        {{ $ClothVariants->appends(request()->input())->links() }}
-                                    </div>
                                 </div>
                             </div>
                         </div>

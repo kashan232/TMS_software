@@ -15,7 +15,7 @@ class PriceListController extends Controller
         if (Auth::id()) {
             $userId = Auth::id();
 
-            $PriceList = PriceList::where('admin_or_user_id', $userId)->paginate(10); // Adjust according to your database structure
+            $PriceList = PriceList::where('admin_or_user_id', $userId)->get(); // Adjust according to your database structure
             $ClothTypes = ClothType::where('admin_or_user_id', $userId)->get(); // Adjust according to your database structure
 
             return view('admin_panel.price_list.price_lists', [

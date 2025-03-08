@@ -141,9 +141,6 @@
 
                                         </tbody>
                                     </table>
-                                    <div class="py-5">
-                                        {{ $Staffs->appends(request()->input())->links() }}
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -195,14 +192,6 @@
                             <label class="form-label">Staff Phone Number</label>
                             <input type="number" class="form-control" id="staff_phone" name="phone_number" placeholder="Phone Number">
                         </div>
-
-                        <div class="mb-3 form-group">
-                            <label class="form-label">Staff Salary</label>
-                            <input type="number" class="form-control" id="staff_salary" name="salary" placeholder="Salary In PKR">
-                        </div>
-
-
-
                         <button type="submit" class="btn btn-primary">Update</button>
                     </form>
                 </div>

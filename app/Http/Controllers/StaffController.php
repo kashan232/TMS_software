@@ -16,7 +16,7 @@ class StaffController extends Controller
         if (Auth::id()) {
             $userId = Auth::id();
 
-            $StaffDesignations = StaffDesignation::where('admin_or_user_id', $userId)->paginate(10); // Adjust according to your database structure
+            $StaffDesignations = StaffDesignation::where('admin_or_user_id', $userId)->get(); // Adjust according to your database structure
 
             return view('admin_panel.staff_management.staff_designations', [
                 'StaffDesignations' => $StaffDesignations,
@@ -100,7 +100,7 @@ class StaffController extends Controller
         if (Auth::id()) {
             $userId = Auth::id();
 
-            $Staffs = Staff::where('admin_or_user_id', $userId)->paginate(10); // Adjust according to your database structure
+            $Staffs = Staff::where('admin_or_user_id', $userId)->get(); // Adjust according to your database structure
             $StaffDesignations = StaffDesignation::where('admin_or_user_id', $userId)->get(); // Adjust according to your database structure
 
             return view('admin_panel.staff_management.staffs', [
@@ -244,7 +244,7 @@ class StaffController extends Controller
             // Fetch all staff expenses with related staff details
             $StaffExpenses = StaffExpense::where('admin_or_user_id', $userId)
                 ->with('staff') // Eager load related staff
-                ->paginate(10);
+                ->get();
 
             return view('admin_panel.staff_management.staff_expenses_record', compact('StaffExpenses'));
         } else {

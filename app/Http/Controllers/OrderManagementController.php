@@ -103,7 +103,7 @@ class OrderManagementController extends Controller
 
             $Orders = Order::where('admin_or_user_id', $userId)
                 ->with('customer') // Ye customer data load karega
-                ->paginate(10);
+                ->paginate(5000);
             $staffMembers = Staff::where('admin_or_user_id', $userId)->get(); // Adjust according to your database structure
 
             // dd($Orders); // Check karein ke email aa raha hai ya nahi
@@ -207,8 +207,7 @@ class OrderManagementController extends Controller
         if (Auth::id()) {
             $userId = Auth::id();
 
-            $Orders = Order::where('admin_or_user_id', $userId)->paginate(10); // Adjust according to your database structure
-            // dd($Orders);
+            $Orders = Order::where('admin_or_user_id', $userId)->with('customer')->paginate(5000); // Adjust according to your database structure
             return view('admin_panel.order.orders_tracker', [
                 'Orders' => $Orders,
             ]);
